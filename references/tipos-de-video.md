@@ -22,6 +22,13 @@ Sinais de que um trecho é forte: "olha isso", "ficou assim", "o resultado", "de
 um número dito em voz alta, uma risada ou surpresa dele, um antes e depois na tela. Os capítulos do YouTube são o
 mapa: cada capítulo costuma ter um momento assim perto do meio ou do fim.
 
+**Forte não basta: o momento tem que ensinar.** O criador recusou duas listas de falas escolhidas só pelo impacto:
+"o vídeo tem que ensinar algo pra essa pessoa que está assistindo, e ela tem que sair do vídeo sentindo que aprendeu
+algo" (`estilo.md`). Os sinais acima servem pra achar a **prova**. O que decide a escolha é a frase que **explica**:
+uma definição dita de um jeito simples, o porquê, um exemplo concreto, a pergunta que a pessoa faria, a ressalva
+honesta, a lição. Pra cada candidato, escreva em uma linha o que a pessoa aprende (`o_que_ensina`). Se não der pra
+escrever essa linha, o candidato não entra.
+
 **Gravação bruta tem erro e repetição.** Quando a mesma frase aparece duas ou três vezes seguidas, a última é a que
 valeu. Trecho com muito "é...", tosse ou silêncio longo no meio pede outro corte ou outro momento.
 
@@ -32,6 +39,46 @@ vez de um por item ("esse vídeo tem que ter a mesma tese do vídeo longo"). Ofe
 O da tese abre com a frase da tese, mostra como se faz, prova com um ou dois resultados e fecha no veredito;
 em vídeo de lista, pelo menos 3 itens, cada um com a frase que o apresenta e o resultado na tela.
 
+## O objetivo do Short: ensinar por inteiro ou levar pro vídeo completo
+
+Todo Short ensina. O que muda é quanto ele entrega e como termina. Pergunte o objetivo na PARADA 1, ou ofereça as
+duas versões: as gravações são as mesmas, muda só a escolha e a ordem das falas. Anote em `"objetivo"`, no topo do
+`momentos.json`.
+
+| | Ensina por inteiro | Leva pro vídeo completo |
+|---|---|---|
+| **O que entrega** | A ideia inteira: o que é, por quê, um exemplo, a lição | Um pedaço de verdade, e mostra que existe mais |
+| **O resultado** | Mostrado e explicado | Mostrado; o caminho até ele fica pro vídeo |
+| **As dúvidas** | Respondidas | Pelo menos uma pergunta fica aberta |
+| **O fim** | A lição ou o veredito | A promessa do vídeo, corte no suspense e o aviso |
+
+**Ensina por inteiro** é a estrutura de `formato.md` (gancho, como, resultado, veredito), com as falas escolhidas
+pelo que explicam.
+
+**Leva pro vídeo completo** (pedido de 24/11/2026, decidido no papel; ainda não chegou a um Short pronto):
+
+1. **A introdução do vídeo longo é a espinha.** Ela já nasceu como gancho e promessa: mostra o resultado, diz o que
+   a pessoa vai aprender, é falada de frente pra câmera, em bloco contínuo. Use quase inteira, na ordem em que ele
+   falou. Saem só o pedido de like e de inscrição e, em vídeo patrocinado, o item com marca de terceiro que caia
+   numa pausa natural. Picotar a introdução em frases soltas foi recusado ("cortou muito a introdução").
+2. **Depois de cada coisa que a introdução afirma, uma prova:** um trecho de outro ponto do vídeo que mostra aquilo
+   acontecendo na tela. Se ele diz que a coisa "sabe tudo", entra o momento em que ela responde; se diz que "não
+   precisa" de algo, entra o momento em que isso se vê. Só a introdução, com dois relances no fim, ele achou "muito
+   crua".
+3. **Ensina o essencial e segura o resto.** Uma das provas explica o pedaço principal (o porquê da coisa funcionar).
+   O passo a passo fica pro vídeo, e pelo menos uma pergunta fica sem resposta.
+4. **A promessa do vídeo** ("nesse vídeo a gente vai ver...") vai perto do fim. Dentro do Short ela passa a
+   trabalhar a favor: aponta pro vídeo completo.
+5. **Corte no suspense:** a última fala anuncia o que vem ("agora eu vou te mostrar...") e o Short acaba nela. Em
+   seguida, o aviso "COMENTA X" no cartão final (`formato.md`, "Aviso no fim"). Na entrega, lembre ele de preencher
+   o campo "Vídeo relacionado" ao publicar.
+6. **A tela não fica parada durante a introdução.** São 30 a 40 s dele falando: o resultado está na tela desde o
+   primeiro quadro (na janela atrás da cabeça ou em motion), cada afirmação ganha o seu motion, e ele só fica em
+   cena onde olha pra lente.
+
+O tamanho segue "Quanto dura" (`formato.md`). No papel, a versão com a introdução intercalada de provas deu uns
+100 s. As frases continuam inteiras, sem palavra na boca dele e sem cortar a ressalva.
+
 ## Os seis tipos
 
 ### 1. Lista ou curadoria
@@ -40,7 +87,8 @@ Cada item já é um Short pronto: um Short por item, nunca dois itens no mesmo.
 - **Gancho:** o que o item faz, em uma frase ("isso aqui tira a cara de IA do seu texto").
 - **Meio:** o item funcionando na tela, de preferência com antes e depois.
 - **Fecho:** o veredito dele ("esse eu não tiro mais").
-- **Cuidado:** a introdução da lista ("existem milhares de...") não entra; o Short começa no item.
+- **Cuidado:** a introdução da lista ("existem milhares de...") não entra; o Short começa no item. (Isso vale pro
+  Short por item. No Short que leva pro vídeo completo, a introdução é a espinha: veja "O objetivo do Short".)
 
 ### 2. Comparativo
 *"Claude Code X Antigravity", "Comparando os 3 melhores modelos", "Fable 5 X Opus".*
@@ -90,10 +138,12 @@ Salve em `momentos.json`, um por candidato:
 ```json
 {
   "tipo_do_video": "lista",
+  "objetivo": "ensinar",
   "momentos": [
     {
       "n": 1,
       "titulo": "Humanizer tira a cara de IA do texto",
+      "o_que_ensina": "dá pra reconhecer um texto de IA por marcas que se repetem, e reescrever só esses trechos",
       "capitulo": "Humanizer: texto de IA com cara de humano",
       "in": 512.4, "out": 556.9,
       "primeira_fala": "esse aqui pega o texto que a IA escreveu",
@@ -109,10 +159,11 @@ Salve em `momentos.json`, um por candidato:
 
 `in` e `out` são tempos da **gravação bruta**, achados com `achar.py`. `ideia_de_motion` é opcional: muitos
 momentos não pedem motion, e nesse caso o campo fica `"nenhum"`. No topo do arquivo, anote também
-`"estilo_dos_motions"`: a linguagem visual escolhida pra este vídeo, em uma frase.
+`"estilo_dos_motions"`: a linguagem visual escolhida pra este vídeo, em uma frase. `"objetivo"` é `"ensinar"` ou
+`"levar-pro-video"` (veja "O objetivo do Short"); `o_que_ensina` é o que a pessoa sai sabendo, em uma linha.
 
-Na conversa, mostre a lista como uma tabela curta (número, título, duração, o que se vê, ideia de motion) e
-espere a escolha dele.
+Na conversa, mostre a lista como uma tabela curta (número, título, o que ensina, duração, o que se vê, ideia de
+motion) e espere a escolha dele.
 
 ## Que motion costuma caber em cada tipo
 

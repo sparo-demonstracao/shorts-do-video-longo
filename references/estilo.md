@@ -41,6 +41,24 @@ que você mostra já tem trilha, efeitos, motions e acabamento.
 - **Ele pede o Short "que ensine algo e que tenha necessariamente um excelente gancho"**, e pode querer, depois do
   gancho, uma passada rápida pelo que a coisa faz ("sem demorar tanto nessa seção"). Ofereça as falas curtas da
   própria introdução do vídeo, com os segundos de cada uma.
+- **"O vídeo tem que ensinar algo pra essa pessoa que está assistindo, e ela tem que sair do vídeo sentindo que
+  aprendeu algo, sentindo que eu agreguei valor pra ela."** (24/11/2026.) Duas listas de falas escolhidas pelos
+  momentos de impacto (resultados, números, demonstrações) foram recusadas no papel: "ficaram ruins as duas
+  versões". Escolha as falas pelo que elas ensinam: uma definição simples, o porquê, um exemplo concreto, a pergunta
+  que quem assiste faria, a ressalva honesta, a lição no fim. O que impressiona continua entrando, como prova do que
+  foi ensinado, não no lugar dele. Um teste (leitura minha): o que a pessoa consegue explicar pra outra depois de
+  assistir? Se a resposta for só "ficou bonito", troque as falas.
+- **Short que leva pro vídeo completo aproveita a introdução do vídeo longo** (24/11/2026). Uma proposta pra "fazer
+  a pessoa ficar interessada em ver o vídeo completo", feita de frases soltas de vários pontos do vídeo, foi
+  recusada: "achei que cortou muito a introdução do vídeo longo, acho que aproveitar mais a introdução seria uma
+  abordagem bem melhor, o objetivo desse vídeo tem que ser deixar a pessoa curiosa pra ver o vídeo completo que
+  ensina isso no detalhe". Com a introdução quase inteira e só dois relances depois: "ficou bem melhor, mas achei que
+  ficou muito crua só com a intro"; e pediu pra ver como ficaria aproveitando "o máximo possível da intro, mas
+  aproveitando também outros momentos do vídeo". O que ficou: a introdução é a espinha, na ordem em que ele falou, e
+  depois de cada coisa que ela afirma entra um trecho que mostra aquilo acontecendo na tela. Receita em
+  `tipos-de-video.md`, "O objetivo do Short". Isso não desfaz o primeiro veredito desta lista: lá o defeito era levar
+  14 s pra mostrar alguma coisa; aqui o resultado está na tela desde o primeiro quadro, enquanto ele fala. (Decidido
+  no papel: nenhum Short pronto nesse molde foi julgado ainda.)
 - **Na dúvida entre curto e completo, ele pede as duas versões** pra comparar. Escreva a cena uma vez só, com as
   partes extras ligadas pelo roteiro (um `secoes.js` por pasta), em vez de duas cenas.
 

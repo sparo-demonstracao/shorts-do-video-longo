@@ -210,3 +210,29 @@ traz sempre o mesmo pacote.
   de 3 a 5 ideias, sem fazer nenhuma.
 - Uma avaliação automática do gancho pelo `virality_predictor` chegou a ser discutida e ficou de fora, a pedido dele.
 - A descrição da skill tinha 1.127 caracteres, acima do limite de 1.024 das skills; foi reescrita.
+
+## 24/11/2026: todo Short ensina, e o Short que leva pro vídeo completo
+
+Nenhum Short montado: foram cinco rodadas de falas no papel, com três vídeos do canal (um lançamento de modelo, um
+tutorial de 32 min e uma explicação de 19 min; deste último só existia o vídeo final editado, com a webcam no canto).
+- **Falas pelos momentos de impacto** (resultados, números, demonstrações), em dois vídeos: "Ficaram ruins as duas
+  versões, o vídeo tem que ensinar algo pra essa pessoa que está assistindo, e ela tem que sair do vídeo sentindo que
+  aprendeu algo nesse vídeo, sentindo que eu agreguei valor pra ela".
+- **Falas pelo que ensinam** (uma ideia por Short, com definição, exemplo, a pergunta que a pessoa faria e a lição):
+  ele não comentou essa lista em separado e passou a perguntar pelo outro objetivo: "E se o objetivo fosse fazer a
+  pessoa ficar interessada em ver o vídeo completo no YouTube?".
+- **Trailer feito de frases soltas** de vários pontos do vídeo (promessa, um pedaço que ensina, uma pergunta sem
+  resposta, corte no suspense): "Achei que cortou muito a introdução do vídeo longo, acho que aproveitar mais a
+  introdução seria uma abordagem bem melhor, o objetivo desse vídeo tem que ser deixar a pessoa curiosa pra ver o
+  vídeo completo que ensina isso no detalhe".
+- **Introdução quase inteira** (uns 36 s de frente pra câmera), dois relances e o corte no suspense: "ficou bem
+  melhor, mas achei que ficou muito crua só com a intro"; ele pediu pra ver como ficaria aproveitando "o máximo
+  possível da intro, mas aproveitando também outros momentos do vídeo".
+- **Introdução como espinha, intercalada com provas** (10 falas, uns 100 s no papel: cada afirmação da introdução
+  seguida de um trecho que mostra aquilo acontecendo, a promessa do vídeo perto do fim, o corte no suspense e o
+  cartão COMENTA). Ele não deu veredito: a conversa foi pra outro assunto. É a última proposta de pé.
+
+Onde isso entrou: `estilo.md` ("Roteiro e ritmo"), `tipos-de-video.md` ("Forte não basta" e "O objetivo do Short"),
+`formato.md` (nota depois da tabela da estrutura) e o passo 4 e a PARADA 1 do `SKILL.md`. Essas duas regras tinham
+ficado guardadas só na memória de um projeto, fora da skill: quem rodava a skill em outra pasta não seguia nenhuma.
+Regra de como fazer Short mora nestes arquivos.

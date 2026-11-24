@@ -27,6 +27,13 @@ Não é "tela em cima, ele embaixo" com cortes. Não existe plano parado.
 | **Segunda prova** | 27 a 33,9 s | Outro exemplo, mais curto | Os dois resultados empilhados; um diagrama simples da ideia (áudio → texto) |
 | **Veredito** | 33,9 a 38,2 s | A frase que fecha, olhando pra lente | Recapitulação em diagrama (o que entrou → o que saiu); ele sobe com o nome da coisa em letra gigante atrás e o endereço real. Acaba 0,12 s depois da última palavra |
 
+**Esta é a estrutura do Short que ensina a ideia inteira.** As falas de cada parte são escolhidas pelo que explicam:
+o resultado que impressiona entra como prova do que foi ensinado (`estilo.md`, "Roteiro e ritmo"). Quando o objetivo
+é deixar a pessoa curiosa pra ver o vídeo completo, a ordem das falas muda: a introdução do vídeo longo vira a
+espinha, com uma prova depois de cada afirmação, e o fim é um corte no suspense com o aviso. A receita está em
+`tipos-de-video.md`, "O objetivo do Short". O resto deste arquivo (a fala sem pausas, onde ele aparece, os motions,
+o som, a revisão) vale pros dois.
+
 ## Quanto dura
 
 **Até 2 min (120 s), sem duração mínima.** Em 17/11/2026 o criador pediu: "quero que os vídeos possam ter até 2

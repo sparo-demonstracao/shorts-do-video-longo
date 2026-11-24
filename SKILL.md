@@ -134,11 +134,19 @@ O som alinhado não garante a boca alinhada: o celular grava som e imagem com re
 (`transcricao/legenda.json`): o Whisper escreve "Cloud Code". Enquanto roda, leia `formato.md` e `estilo.md`.
 
 ### 4. Momentos
-Descubra o tipo do vídeo (`tipos-de-video.md`) e escolha os candidatos. Pra cada um, escreva as frases que entram
-(na ordem do Short, não do vídeo) e a ideia de motion de cada frase. Salve em `momentos.json`.
+Descubra o tipo do vídeo (`tipos-de-video.md`) e escolha os candidatos **pelo que ensinam**: quem assiste tem que
+sair sabendo uma coisa que não sabia. O momento que impressiona entra como prova do que foi ensinado, não no lugar
+dele. Pra cada candidato, escreva o que a pessoa aprende, as frases que entram (na ordem do Short, não do vídeo) e a
+ideia de motion de cada frase. Salve em `momentos.json`.
 
-**PARADA 1.** Mostre os candidatos numa tabela curta: a tese de cada Short, as frases, a duração estimada. Pergunte
-se ele quer **um Short por item ou o Short da tese do vídeo inteiro**. Se ele já disse "escolhe você", siga.
+**PARADA 1.** Mostre os candidatos numa tabela curta: a tese de cada Short, o que ele ensina, as frases exatas, a
+duração estimada. Pergunte duas coisas:
+- se ele quer **um Short por item ou o Short da tese do vídeo inteiro**;
+- **qual é o objetivo: ensinar a ideia inteira ou deixar a pessoa curiosa pra ver o vídeo completo.** No segundo, a
+  introdução do vídeo longo entra quase inteira e vira a espinha do Short, com uma prova depois de cada afirmação e
+  corte no suspense (`tipos-de-video.md`, "O objetivo do Short").
+
+Se ele já disse "escolhe você", siga.
 
 ### 5. O roteiro de falas
 1. Ache cada frase (`achar.py`) e acerte as pontas pelo volume (`pontas.py`). Leia a transcrição em volta: recado
@@ -234,6 +242,8 @@ Não publique nada. No fim, atualize `references/historico.md` e, se uma regra n
   Se um pedido já tinha sido cobrado quando ele mandou parar, diga.
 - **O rosto e a fala reais dele não passam por IA** sem ordem dele naquele vídeo. Plano gerado dele é sempre uma
   câmera a mais, curta, nunca a principal.
+- **Todo Short ensina.** Quem assiste sai sabendo uma coisa que não sabia. Fala escolhida só porque impressiona não
+  entra: o resultado é a prova do que foi ensinado.
 - **Texto na tela só se for fato** da fala ou da tela dele. Nada de "%", código, rótulo ou paráfrase inventados.
 - **Não ponha palavra na boca dele** e não corte a ressalva que torna uma afirmação verdadeira.
 - **Ele só aparece onde olha pra lente**, no cenário real dele.

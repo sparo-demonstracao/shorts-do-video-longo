@@ -77,7 +77,8 @@ As gravações brutas estão em C:\Users\voce\Videos\meu-video
 
 O Claude para três vezes pra você decidir:
 
-1. **Os momentos.** Ele mostra os candidatos, com as falas exatas e a duração de cada um. Você escolhe.
+1. **Os momentos.** Ele mostra os candidatos, com o que cada um ensina, as falas exatas e a duração. Você escolhe os
+   momentos e o objetivo do Short: ensinar a ideia inteira ou deixar a pessoa curiosa pra ver o vídeo completo.
 2. **A versão 1 e o orçamento.** O Short já vem completo, sem gastar nada. Junto vem a lista do que o Higgsfield pode
    acrescentar, com o preço de cada item. Nada é gerado sem o seu "pode".
 3. **A entrega.** O vídeo final, o que foi conferido e o que só você consegue conferir: o Claude não ouve o áudio,
