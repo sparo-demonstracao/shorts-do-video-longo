@@ -191,3 +191,22 @@ que os programas gravaram (os mp4 da v5, a trilha, a `motion.html` copiada pra c
 começar uma rodada, olhe as datas da pasta `saida`: se houver versão mais nova do que a conversa conhece, leia o fim do
 histórico da sessão anterior (`.jsonl` em `.claude/projects/...`) pra saber o que foi feito, quanto custou e o que ele
 achou. Nome de arquivo novo sempre acima do maior que existe na pasta.
+
+## 24/11/2026: o acabamento do Higgsfield virou pacote fixo
+
+Pedido do criador, sem vídeo novo no meio: o Higgsfield entra no fim, depois que o Short já está cortado e animado, e
+traz sempre o mesmo pacote.
+- **Trilha:** "Vamos sempre gerar uma nova versão de música parecida com a que eu gostei." Antes a regra era não gerar
+  trilha sem ele pedir, depois das quatro faixas reprovadas no vídeo do agente de WhatsApp. Agora a trilha nova vai
+  sempre no orçamento, pedida com o som medido da `trilha-ia.mp3`, e ele escolhe entre ela e a padrão. Conferido no
+  catálogo nesse dia: nenhum modelo de música aceita áudio de referência, então "parecida" depende da descrição e da
+  medição.
+- **Efeitos:** cada animação ganha um efeito gravado escolhido pra ela, do catálogo da Epidemic Sound que o Higgsfield
+  dá acesso (`search_sound_effects` funcionou nesse dia; o download não foi testado, então o custo dele ainda não
+  está medido). Os baixados ficam numa biblioteca comum (`shorts-canal\_sons`) pra não baixar duas vezes.
+- **Ângulos:** continuam como estavam (câmera 2, entrada no monitor, tela do PC), escolhidos pelo que faz sentido no
+  vídeo.
+- **Sugestões no fim:** "Quero que me dê sugestões de melhorias quando tudo estiver finalizado." A entrega final traz
+  de 3 a 5 ideias, sem fazer nenhuma.
+- Uma avaliação automática do gancho pelo `virality_predictor` chegou a ser discutida e ficou de fora, a pedido dele.
+- A descrição da skill tinha 1.127 caracteres, acima do limite de 1.024 das skills; foi reescrita.

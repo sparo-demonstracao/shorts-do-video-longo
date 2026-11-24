@@ -20,8 +20,9 @@ Pra ver como fica: [folha de quadros de um Short pronto](assets/cena/exemplo-apr
   título e os capítulos do vídeo publicado. Os programas foram feitos e testados só no Windows.
 - **Python 3.10 ou mais novo** e o **ffmpeg**.
 - **As gravações brutas do vídeo** (voz, tela e câmera, juntas ou em arquivos separados) e o link do vídeo publicado.
-- **Opcional: uma conta no Higgsfield conectada ao Claude.** Só entra no acabamento pago (recorte, trilha nova,
-  planos gerados). A primeira versão do Short sai completa sem gastar crédito nenhum.
+- **Opcional: uma conta no Higgsfield conectada ao Claude.** Só entra no acabamento pago (trilha nova parecida com a
+  aprovada, um efeito sonoro gravado pra cada animação, recorte, planos gerados). A primeira versão do Short sai
+  completa sem gastar crédito nenhum.
 
 ## Instalar
 
@@ -80,7 +81,8 @@ O Claude para três vezes pra você decidir:
 2. **A versão 1 e o orçamento.** O Short já vem completo, sem gastar nada. Junto vem a lista do que o Higgsfield pode
    acrescentar, com o preço de cada item. Nada é gerado sem o seu "pode".
 3. **A entrega.** O vídeo final, o que foi conferido e o que só você consegue conferir: o Claude não ouve o áudio,
-   então cheque o volume da trilha e os efeitos.
+   então cheque o volume da trilha e os efeitos. Junto vêm de 3 a 5 sugestões do que ainda melhoraria o Short; ele
+   não faz nenhuma sem você pedir.
 
 Depois é só pedir ajuste do jeito que você falaria com um editor: "a abertura ficou fraca, faz 2 opções", "quero ver
 as duas lado a lado", "tira essa frase". Cada rodada vira uma versão nova e nenhuma versão é apagada.

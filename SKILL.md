@@ -1,6 +1,6 @@
 ---
 name: shorts-do-video-longo
-description: Transforma um vídeo longo de um canal do YouTube em Shorts verticais (de até 2 min) num formato já testado e aprovado — o Short inteiro como uma cena animada, com a fala real do criador sem pausas, o material real da tela em tela cheia, motions explicativos criados pelo próprio Claude em HTML em quase toda frase, o criador no cenário real só quando olha pra câmera, poucos planos gerados no Higgsfield (câmera 2, entrada no monitor, tela do PC), trilha e efeitos. Usa as gravações brutas, o Higgsfield MCP e programas próprios de montagem. Use SEMPRE que o usuário mandar o link de um vídeo do canal dele e/ou as gravações brutas e pedir Shorts, cortes, reels ou "os melhores momentos", ou disser "faz os shorts desse vídeo", "corta esse vídeo em shorts", "roda a skill de shorts", "cria os motions desse short", e também quando ele pedir ajuste, nova versão, comparação lado a lado ou outra abertura de um Short já feito por aqui. Serve pra qualquer formato de vídeo (lista, comparativo, lançamento, app que ele criou, tutorial, notícia). NÃO usar pra short animado sem o criador em cena, nem pra editar o vídeo longo em si.
+description: Transforma um vídeo longo do YouTube em Shorts verticais de até 2 min, num formato já testado, com o Short inteiro numa cena só, a fala real do criador sem pausas, a gravação da tela em tela cheia e animações explicativas feitas em HTML, montado das gravações brutas com programas próprios. No acabamento, o Higgsfield traz trilha nova parecida com a aprovada, um efeito sonoro gravado pra cada animação, o recorte do criador e poucos planos gerados. Use SEMPRE que o usuário mandar o link de um vídeo do próprio canal e/ou as gravações brutas e pedir Shorts, cortes, reels, clipes ou "os melhores momentos", ou disser "faz os shorts desse vídeo", "corta esse vídeo em shorts", "roda a skill de shorts", "cria os motions desse short". Use também pra ajustar, refazer, comparar lado a lado ou trocar a abertura de um Short já feito com ela. Serve pra qualquer tipo de vídeo (lista, comparativo, lançamento, app, tutorial, notícia). NÃO usar pra short 100% animado sem o criador em cena, nem pra editar o vídeo longo em si.
 ---
 
 # Shorts a partir do vídeo longo
@@ -10,7 +10,8 @@ Shorts prontos em MP4, o que gastou e o que ele precisa conferir.
 
 **Quem faz o quê.** O criador gravado é a matéria-prima: a fala e o rosto são os reais. Você é o roteirista, o editor
 e o motion designer: escolhe as frases, tira as pausas, **cria a cena animada inteira**, confere quadro a quadro e
-monta. O Higgsfield entra pouco e por último: trilha, recorte e dois ou três planos curtos. Os programas em
+monta. O Higgsfield entra no fim, no acabamento: trilha nova parecida com a aprovada, um efeito sonoro gravado pra
+cada animação, o recorte e dois ou três planos curtos. Os programas em
 `scripts/` cortam, medem, fotografam e montam; eles não inventam nada sozinhos.
 
 **Fale com ele em português simples, sem jargão de programação.** Resposta curta, o que importa primeiro.
@@ -94,6 +95,7 @@ no monitor fluida e terminando na página real), `colar_tela.py` (motion real na
 ## Pastas
 
 ```
+~\shorts-canal\_sons\                  efeitos gravados já baixados e o sons.json (servem pra todos os vídeos)
 ~\shorts-canal\<nome-do-video>\        (~ é a pasta do usuário no PC)
   video.json  fontes.json  momentos.json  orcamento.md
   transcricao\              um .json e um .txt por gravação com fala; legenda.json corrigida
@@ -151,8 +153,8 @@ se ele quer **um Short por item ou o Short da tese do vídeo inteiro**. Se ele j
 ### 6. O material real
 - **Capturas** da gravação de tela no instante certo, em resolução cheia:
   `ffmpeg -ss <t + atraso da tela> -i <tela> -frames:v 1 -q:v 2 material/<nome>.jpg`. Uma por tela que a cena usa.
-- `fundo_sala.py` pro cenário dele. Copie `assets/audio/*` desta skill pra `material/audio/` (trilha e efeitos já
-  pagos, que servem pra qualquer vídeo).
+- `fundo_sala.py` pro cenário dele. Copie `assets/audio/*` desta skill pra `material/audio/`: são a trilha e os
+  efeitos da versão 1, que não custa nada. No acabamento eles são trocados (passo 9).
 - O que ele digitou na gravação (o pedido, o comando): copie o texto exato, pra redigitar na cena.
 - Texto e número que vão aparecer: liste de onde cada um vem (fala ou tela). O que não tem origem não entra.
 
@@ -168,13 +170,31 @@ sempre as passagens (ele entrando e saindo, troca de material) em 4 ou 5 instant
 
 ### 8. A versão 1 e o orçamento
 **PARADA 2.** Entregue a versão 1 (link clicável, caminho da pasta e a cópia leve pelo app) dizendo o que ela tem e
-o que você não consegue conferir (você não ouve). Junto, a lista do que o Higgsfield pode acrescentar, com o preço
-de cada item consultado (`get_cost`) e o saldo: recorte dele (1 crédito por pedido; é o que faz a janela passar
-atrás da cabeça, e até lá ela fica acima dela), câmera 2, entrada no monitor, tela do PC. Sem o "pode", nada é gerado. Um teto dado no pedido ("pode gastar até 200") vale só pra
-aquela rodada.
+o que você não consegue conferir (você não ouve). Junto, o orçamento do acabamento (`orcamento.md`, modelo em
+`higgsfield.md`), com o preço de cada item consultado na hora e o saldo:
+
+- **Sempre no pacote:**
+  - **trilha nova** do tamanho do Short, parecida com a `trilha-ia.mp3` (preço pelo `estimate_audio_cost`);
+  - **um efeito sonoro gravado pra cada animação**, do catálogo de sons do Higgsfield: diga quantos sons novos
+    vão ser baixados e quantos já estão na biblioteca `_sons`;
+  - **recorte dele** (1 crédito por pedido): é o que faz a janela passar atrás da cabeça; sem ele, ela fica acima.
+- **Planos gerados**, os que fizerem sentido pro vídeo: câmera 2, entrada no monitor, tela do PC.
+
+Sem o "pode", nada é gerado nem baixado. Um teto dado no pedido ("pode gastar até 200") vale só pra aquela rodada.
 
 ### 9. Acabamento pago
-Um item por vez, do mais barato pro mais caro, sempre nesta escada (`higgsfield.md`):
+Antes de trocar qualquer coisa, `guardar_versao.py`: a versão 1 que ele viu não é sobrescrita.
+
+**Trilha e efeitos** (detalhes em `higgsfield.md`, "A trilha nova" e "Efeitos sonoros"):
+- **Trilha:** gere a faixa com o som da `trilha-ia.mp3` descrito no pedido e meça antes de mostrar (andamento,
+  pulso, graves, volume constante). Monte a versão com ela, corte os primeiros ~15 s dela e da mesma versão na
+  trilha padrão (`ffmpeg -t 15`) e junte os dois em sequência com `comparar.py seq`, pra ele escolher. Ele pode
+  ficar com a padrão.
+- **Efeitos:** liste cada `Motion.sfx` da cena (tempo e o que se mexe), escolha um som gravado pra cada movimento
+  (busca no catálogo é livre; baixe só os escolhidos), meça, apare, troque o arquivo no `Motion.sfx` e refaça só a
+  pista com `motion.py som`. Som que já está em `_sons` não se baixa de novo. Depois, `compor.py montar`.
+
+**Planos gerados**, um item por vez, do mais barato pro mais caro, sempre nesta escada (`higgsfield.md`):
 **foto** (0,25) → ele escolhe → **rascunho do vídeo** (15) → você confere e **põe o rascunho dentro do Short** →
 lado a lado com a versão atual → ele decide → **preço da finalização consultado na hora** → finalização.
 Um plano que ele aprova sozinho pode ser reprovado dentro do Short; por isso a decisão é sempre no Short.
@@ -197,7 +217,11 @@ Ele vai pedir mudanças, e cada rodada vira uma versão nova:
 - **o que você não consegue conferir**: você não ouve. Peça pra ele checar o volume da trilha e os efeitos novos;
 - se há plano gerado dele ou fala gerada (ele decide se marca "conteúdo alterado" no YouTube);
 - créditos gastos de verdade (saldo antes menos depois, conferido com `transactions`: ele também gera coisas no
-  site) e o saldo.
+  site) e o saldo;
+- **sugestões de melhoria**, só depois que tudo estiver finalizado: de 3 a 5 ideias concretas do que ainda deixaria
+  o Short melhor (no corte, nos motions, no som ou no que o Higgsfield pode criar), cada uma com o trecho, o que
+  muda na tela e o preço consultado quando custa. Só ideias que melhoram o material real (cena de IA ilustrando a
+  fala foi reprovada, `estilo.md`). Nenhuma é feita sem ele pedir.
 
 Arquivo acima de ~10 MB falha no envio pelo app: mande a cópia leve
 (`ffmpeg -i v.mp4 -vf scale=720:-2 -crf 24 -c:a aac -b:a 128k v-leve.mp4`) e diga onde está o de qualidade cheia.

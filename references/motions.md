@@ -137,9 +137,10 @@ e uma camada `<div class="ins" id="insX"><img data-dir="quadros/insX"></div>` lo
 `ins('insX', t, [qd(k0), qd(k1), n])`. Câmera 2 com ele falando entra no mesmo tempo da fala (o `-ss` é o tempo
 da palavra dentro do take), sem acelerar.
 
-**Som.** `Motion.sfx(t, arquivo, volume, {dur, corte, entra, sai})` marca um efeito gravado no instante `t` (os
-arquivos estão em `material/audio/`, copiados de `assets/audio/`). Um por movimento que importa: passagem no que
-entra de lado, estalo no que acende, teclado em cada palavra digitada, impacto no número gigante e no fecho.
+**Som.** `Motion.sfx(t, arquivo, volume, {dur, corte, entra, sai})` marca um efeito gravado no instante `t` (na
+versão 1, os arquivos de `material/audio/`, copiados de `assets/audio/`). Um por movimento que importa: passagem no
+que entra de lado, estalo no que acende, teclado em cada palavra digitada, impacto no número gigante e no fecho. No
+acabamento, cada um vira um som gravado escolhido pra aquele movimento (`higgsfield.md`, "Efeitos sonoros").
 
 ## O palco (`comum/palco.js`) e os ajudantes do esqueleto
 

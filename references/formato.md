@@ -57,9 +57,9 @@ O que muda num Short mais longo:
   o Short tem 45 s.
 - **Custa e demora mais:** o recorte e a trilha são cobrados por segundo, e a renderização da cena leva uns
   4 min pra cada 38 s de vídeo (uns 13 min pra 2 min). Ponha isso no orçamento da PARADA 2.
-- **A trilha da skill tem 42 s.** A montagem repete a faixa quando o Short é mais longo, e a emenda pode
-  aparecer. Acima de ~45 s, ouça a emenda numa folha de onda ou peça ao criador pra aprovar uma trilha do
-  tamanho do Short (preço por segundo em `higgsfield.md`).
+- **A trilha padrão tem 42 s.** A montagem repete a faixa quando o Short é mais longo, e a emenda aparece: na
+  versão 1, estenda com `trilha_ia_estender.py` (`estilo.md`). A trilha nova do acabamento já vem do tamanho do
+  Short (preço por segundo em `higgsfield.md`).
 
 Passou de 120 s: tire uma frase inteira, não aperte as outras.
 
@@ -178,10 +178,12 @@ legenda. Câmera 2 com ele falando entra no mesmo tempo da fala, sem acelerar.
 ## O som
 
 - **Trilha eletrônica com cara de IA** (sintetizador, pulso), volume 0,10, sumindo no último 1,2 s. Ele pediu
-  "música que remeta a inteligência artificial". `assets/audio/trilha-ia.mp3` já é dele e serve pra qualquer vídeo.
+  "música que remeta a inteligência artificial". `assets/audio/trilha-ia.mp3` é a padrão e vai na versão 1. No
+  acabamento, todo Short ganha uma trilha nova parecida com ela, e ele escolhe entre as duas (`higgsfield.md`).
 - **Efeitos gravados**, um em cada movimento que importa: passagem (`vuush`), estalo (`pop`), impacto, teclado,
-  dados correndo, subida. Estão em `assets/audio/`: copie pra `material/audio/` do vídeo. Efeito sintetizado foi
-  um dos motivos da reprovação da versão 2 ("acabamento de máquina").
+  dados correndo, subida. Na versão 1 vêm de `assets/audio/` (copie pra `material/audio/` do vídeo); no acabamento,
+  cada movimento ganha um som gravado escolhido pra ele no catálogo do Higgsfield. Efeito sintetizado foi um dos
+  motivos da reprovação da versão 2 ("acabamento de máquina").
 
 ## Revisão antes de mostrar
 

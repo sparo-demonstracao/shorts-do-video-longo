@@ -71,8 +71,14 @@ que você mostra já tem trilha, efeitos, motions e acabamento.
   **"quero algo que remeta mais à Inteligência Artificial e Agentes de IA"**. Foram quatro faixas geradas pra esse
   vídeo (59,89 créditos) e nenhuma serviu. **A trilha padrão é a `assets/audio/trilha-ia.mp3`**, a do Short "Clona
   Qualquer App": eletrônica, 112 bpm cravados, pulso regular de semicolcheias (7,4 ataques por segundo), grave cheio,
-  quase nada acima de 4 kHz, volume constante. Não gere outra sem ele pedir; se pedir, meça esta e descreva o som dela
-  no pedido.
+  quase nada acima de 4 kHz, volume constante.
+- **"Vamos sempre gerar uma nova versão de música parecida com a que eu gostei."** (24/11/2026.) Todo Short ganha uma
+  trilha nova no acabamento, pedida com o som medido da `trilha-ia.mp3` (receita em `higgsfield.md`, "A trilha
+  nova"). Ela vai sempre no orçamento e precisa do "pode" como qualquer crédito. Entregue a versão com ela em
+  sequência com a mesma versão na trilha padrão: se ele preferir a padrão, fica a padrão.
+- **Efeito gravado pra cada animação** (24/11/2026). No acabamento, cada `Motion.sfx` ganha um som escolhido pra
+  aquele movimento, do catálogo de sons do Higgsfield (`higgsfield.md`, "Efeitos sonoros"). Os sons de
+  `assets/audio/` ficam só na versão 1.
 - **Short maior que 42 s: estenda a `trilha-ia.mp3`, não deixe a montagem dar a volta sozinha.** O `compor.py` repete
   o arquivo do começo: a faixa some de 38,75 s em diante e recomeça em 42 s fora da batida (buraco de 2 s). Monte um
   arquivo do tamanho do Short com `scripts/trilha_ia_estender.py` (ajuste as chamadas do fim pra cada vídeo): saltos de
@@ -189,6 +195,9 @@ rodadas de foto e um rascunho, **preferiu a câmera 2 antiga**. O que ficou:
 - **Ele acompanha o Higgsfield pelo site** e às vezes vê o resultado antes de você mostrar ("ficou ruim, vi no
   Higgsfield"). Também gera coisas por conta própria lá: o saldo pode cair sem ter sido você.
 - **Ele quer saber onde está o arquivo.** Toda entrega traz o link clicável do vídeo e o caminho da pasta.
+- **"Quero que me dê sugestões de melhorias quando tudo estiver finalizado."** (24/11/2026.) A entrega final traz de 3
+  a 5 ideias concretas do que ainda deixaria o Short melhor, com o trecho, o que muda na tela e o preço quando custa.
+  Só ideias que melhoram o material real. Nenhuma é feita sem ele pedir.
 - **Resposta curta, em português simples**, o que importa primeiro. Se uma etapa demorar ou parecer exagero
   ("precisa de tirar tantos prints assim? por quê?"), diga em uma linha pra que serve.
 

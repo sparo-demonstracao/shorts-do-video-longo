@@ -73,7 +73,8 @@ sem boca nunca chegaram a um Short.
 | Segunda câmera, plano B | `generate_video`, `seedance_2_5`, `mode: "omni_reference"` | `image_references` | 28 por 4 s em 720p; 64 em 1080p |
 | Fala de ligação | `generate_audio`, `seed_audio` ou `elevenlabs_v4` | texto + voz dele | 0,46 numa frase de 9 palavras |
 | Trilha | `generate_audio`, `elevenlabs_music_v2_5`, `force_instrumental: true` | prompt + `duration` | 4,36 por 30 s; 6,5 por 45 s |
-| Efeito sonoro | `generate_audio`, `mirelo_text_to_audio` | prompt + `duration` (1 a 3 s) | cerca de 0,4 cada |
+| Efeito sonoro gravado | `search_sound_effects` + `download_sound_effect` (catálogo da Epidemic Sound) | descrição em inglês | busca livre; download gasta a cota de downloads (crédito não medido) |
+| Efeito sonoro gerado | `generate_audio`, `mirelo_text_to_audio` | prompt + `duration` (1 a 3 s) | cerca de 0,4 cada |
 | Rosto falando (só se ele pedir) | `generate_video`, `intone` | `character_images` + `location_image` + `audio_references` | **não medido** (o preço só sai com o áudio) |
 
 Kling 4.0 e Seedance 2.5 eram os modelos mais novos de cada família em 12/11/2026 (não existia Seedance 3.0 no
@@ -137,21 +138,63 @@ vem a 24 quadros por segundo: toque quadro por quadro (fica 25% mais rápido, li
 - Depois de gerar, transcreva o áudio (`transcrever.py`) pra conferir se ela falou o que estava escrito e pra
   tirar os tempos das palavras da legenda.
 
-### A trilha do tamanho do Short
+### A trilha nova (sempre, parecida com a aprovada)
 
-`elevenlabs_music_v2_5` com `duration` igual à do Short e `force_instrumental: true` (18/11/2026: 9,45 por 65 s e 16,72
-por 115 s). O preço agora se consulta com `estimate_audio_cost` (o `get_cost` dentro de `generate_audio` não é mais
-aceito). A faixa termina sozinha no último segundo, então não há emenda. **Meça antes de usar**: a de 115 s veio com
-19 s de introdução 7 dB mais baixa, apesar de o prompt pedir energia constante desde o começo; subi o trecho em 6 dB
-(`volume` com expressão por tempo) em vez de cortar. Volume por segundo e uma folha de onda mostram isso sem ouvir.
+O criador pediu (24/11/2026): **todo Short ganha uma trilha nova, parecida com a `assets/audio/trilha-ia.mp3`**, a
+única de que ele gostou. Ela vai sempre no orçamento da PARADA 2 e só é gerada com o "pode".
+
+- **Modelo:** `elevenlabs_music_v2_5`, `force_instrumental: true`, `duration` igual à do Short (18/11/2026: 9,45 por
+  65 s e 16,72 por 115 s). Preço pelo `estimate_audio_cost` (o `get_cost` dentro de `generate_audio` não é aceito).
+  `batch_size` até 4 traz variações numa chamada só: consulte o preço com ele, porque multiplica.
+- **Nenhum modelo de música do catálogo aceita áudio de referência** (conferido em 24/11/2026). "Parecida" sai da
+  descrição do som medido da `trilha-ia.mp3`: eletrônica, 112 bpm, pulso regular de semicolcheias (7,4 ataques por
+  segundo), grave cheio, quase nada acima de 4 kHz, volume constante. Não cite artista. Ponto de partida pro pedido:
+
+  ```
+  Instrumental electronic track for a tech tutorial about AI agents. 112 BPM, steady driving pulse of
+  sixteenth-note synth plucks from the very first second, full warm sub bass, soft dark top end with almost
+  nothing bright above 4 kHz, constant energy and volume from start to end. No intro, no breakdown, no build-up,
+  no drop, no vocals. Ends cleanly on the last bar.
+  ```
+
+- **Meça antes de mostrar** e compare com a `trilha-ia.mp3`: andamento pelos ataques acima de 200 Hz, ataques por
+  segundo, energia acima de 4 kHz, volume por segundo. A de 115 s de 18/11 veio com 19 s de introdução 7 dB mais
+  baixa, apesar do pedido de energia constante: subi o trecho em 6 dB (`volume` com expressão por tempo) em vez de
+  cortar. Se a faixa nova ficou longe da padrão em algum número, diga qual ao entregar.
+- **A faixa termina sozinha no último segundo**, então não há emenda. Volume ~16 dB abaixo da voz (`estilo.md`).
+- **Quem escolhe é ele:** monte a versão com a trilha nova, corte os primeiros ~15 s dela e da mesma versão na
+  trilha padrão (`ffmpeg -t 15`) e junte os dois em sequência com `comparar.py seq` (ele só aceita arquivos
+  inteiros). Ele já reprovou quatro faixas geradas seguidas; se
+  reprovar a nova, o Short fica com a padrão (estendida com `trilha_ia_estender.py` quando passar de 42 s).
 
 ### Efeitos sonoros
 
-O `mirelo_text_to_audio` funciona pra efeito avulso (o catálogo diz que é de outro fluxo, mas aceita): passagem,
-estalo, teclado, impacto, subida. Chegam com silêncio no começo e volumes muito diferentes: **meça antes de usar**
-(onde o som começa, pico e volume médio) e apare. Na cena, `Motion.sfx(t, 'caminho.mp3', volume, {corte, dur,
-entra, sai})` usa o arquivo; `motion.py som <pasta>` refaz só a pista. Se o modelo recusar, o `motion.py` ainda
-sintetiza os sons básicos sem crédito ('vuush', 'pop', 'tique'...), mas o criador achou esses com cara de máquina.
+O criador pediu (24/11/2026): **no acabamento, cada animação ganha um efeito gravado escolhido pra ela.** A versão 1
+usa os sons de `assets/audio/` e os sintetizados do `motion.py`, que ele chamou de "acabamento de máquina".
+
+1. **A lista.** Cada `Motion.sfx` da cena é uma linha: tempo, o que se mexe e o som que aquilo pede ("painel entra
+   pela direita: passagem curta e brilhante, 0,4 s"; "número gigante: impacto seco"; "pedido digitado: teclado
+   mecânico, toques curtos").
+2. **A biblioteca primeiro.** `~\shorts-canal\_sons\sons.json` guarda cada som já baixado (id do catálogo, título,
+   duração, arquivo, onde o som começa, pico, volume médio e pra que movimento serviu). O que já existe ali não se
+   baixa de novo.
+3. **Busca no catálogo** (`search_sound_effects`, livre), em inglês, descrevendo o movimento: "user interface swipe
+   whoosh short", "keyboard typing mechanical short", "impact hit short punchy", "digital data glitch",
+   "riser short". Escolha pelo título e pela duração: você não ouve, então não gaste a cota de prévia
+   (`preview_sound_effect`) à toa.
+4. **Baixe só os escolhidos** (`download_sound_effect`, qualidade `normal`): cada chamada gasta a cota de downloads.
+   A resposta é um link que vence (~24 h): salve na hora com `curl -sSL -o` em `_sons\`, reaproveite o link se
+   precisar de novo e nunca repita a chamada no escuro depois de uma falha. **Na primeira vez, anote o `balance`
+   antes e depois e escreva aqui se o download custa crédito.**
+5. **Meça e apare** (onde o som começa, pico, volume médio) e anote no `sons.json`. Na cena,
+   `Motion.sfx(t, 'caminho.mp3', volume, {corte, dur, entra, sai})` usa o arquivo; `motion.py som <pasta>` refaz só
+   a pista, sem renderizar a imagem de novo.
+6. **Faltou no catálogo:** gere com o `mirelo_text_to_audio` (cerca de 0,4 cada; o catálogo diz que é de outro
+   fluxo, mas aceita). Os dele chegam com silêncio no começo e volume de −44 a −55 dB: meça e aumente. Sintetizado
+   do `motion.py` ('vuush', 'pop', 'tique'...) não entra no Short final.
+
+Os sons do catálogo chegam pela integração do Higgsfield com a Epidemic Sound. Antes do primeiro Short publicado com
+eles, confira nos termos do Higgsfield se o uso em vídeo publicado está coberto.
 
 ## O que mais o catálogo tem (preços consultados em 13/11/2026; o que já foi testado está logo abaixo da tabela)
 
@@ -307,13 +350,13 @@ Exemplo de como escrever:
 
 ```
 Short 01: Humanizer (41 s)
-  recorte, 3 trechos, 22 s .................. preço medido no primeiro trecho
-  transição x2 (Kling 4.0, 4 s, 1080p) ...... 26
-  segunda câmera x2 (Kling 4.0, 4 s) ........ 26
-  fala de ligação x1 ......................... 1
-Do vídeo todo:
-  estúdio (já existe, reaproveitado) ......... 0
-  trilha de 45 s ............................. 7
-Total conhecido: 60 créditos + recorte. Reserva pra refação (uma por cena): 52.
+  Sempre no pacote:
+    trilha nova de 41 s, parecida com a padrão ... 7
+    efeitos gravados: 14 movimentos ............. 9 sons novos (cota de downloads), 5 já na biblioteca
+    recorte, 3 trechos num pedido só ............ 1
+  Planos gerados:
+    entrada no monitor (foto + Kling 4.0, 5 s) .. 16,5
+    câmera 2 (foto + Kling 4.0, 5 s) ............ 16,5
+Total conhecido: 41 créditos + cota de downloads. Reserva pra refação (uma por plano): 33.
 Saldo agora: 1.820.
 ```
