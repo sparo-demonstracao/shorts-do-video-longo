@@ -1,0 +1,181 @@
+{
+ "id": "cena",
+ "palavras": "../transcricao/legenda.json",
+ "fontes": {
+  "audio": {
+   "arquivo": "C:/Users/voce/Documentos/Adobe/Audition/[REA] VO_01.wav"
+  },
+  "cam": {
+   "arquivo": "C:/Users/voce/Downloads/20261015_124742.mp4",
+   "atraso": [
+    [
+     715,
+     -3.181
+    ],
+    [
+     1010,
+     -3.201
+    ],
+    [
+     1400,
+     -3.225
+    ],
+    [
+     1955,
+     -3.261
+    ],
+    [
+     2262,
+     -3.281
+    ],
+    [
+     2290,
+     -3.282
+    ],
+    [
+     5685,
+     -3.011
+    ]
+   ],
+   "nota_fim": "no fim da gravação (1h35) a imagem do celular chega ~0,21 s depois do próprio som (medido nos lábios no \"p\" de \"aplicativo\"): o ponto de 5685 já inclui esse atraso (-3,221 do som + 0,21)."
+  },
+  "tela": {
+   "arquivo": "C:/Users/voce/Videos/2026-10-15 12-46-23.mkv",
+   "atraso": [
+    [
+     715,
+     2.159
+    ],
+    [
+     1010,
+     2.089
+    ],
+    [
+     1400,
+     2.089
+    ],
+    [
+     1740,
+     2.089
+    ],
+    [
+     1880,
+     2.019
+    ],
+    [
+     1955,
+     2.019
+    ],
+    [
+     2262,
+     2.019
+    ],
+    [
+     2300,
+     2.019
+    ],
+    [
+     5685,
+     2.016
+    ]
+   ]
+  }
+ },
+ "falas": [
+  [
+   1028.2233,
+   1031.8566
+  ],
+  [
+   1032.0567,
+   1032.99
+  ],
+  [
+   732.2833,
+   733.7833
+  ],
+  [
+   734.05,
+   734.65
+  ],
+  [
+   734.7833,
+   736.9833
+  ],
+  [
+   737.8167,
+   738.7833
+  ],
+  [
+   738.9167,
+   741.0167
+  ],
+  [
+   746.5134,
+   749.78
+  ],
+  [
+   1416.9833,
+   1421.3167
+  ],
+  [
+   1844.3233,
+   1851.79
+  ],
+  [
+   1968.9233,
+   1972.49
+  ],
+  [
+   1973.6233,
+   1976.9567
+  ],
+  [
+   5701.4067,
+   5702.44
+  ],
+  [
+   5702.6733,
+   5705.9067
+  ]
+ ],
+ "nomes_falas": [
+  "G1",
+  "G2",
+  "C11",
+  "C12",
+  "C13",
+  "C14",
+  "C15",
+  "C21",
+  "R11",
+  "R21",
+  "W1",
+  "W2",
+  "V1",
+  "V2"
+ ],
+ "fades": {
+  "11": {
+   "out": 0.03
+  }
+ },
+ "cam": {
+  "largura": 1920
+ },
+ "telas": {
+  "dpill": {
+   "in": 2277.0,
+   "dur": 3.4,
+   "regiao": [
+    1170,
+    1383,
+    220,
+    44
+   ],
+   "largura": 660
+  }
+ },
+ "nota": "v3 (13/11/2026): as mesmas 7 frases da v2, sem as pausas de dentro (>= 0,25 s viram ~0,12 s; pedacos.py), com 0,04 s antes do primeiro som e 0,08 s depois do último. Ele aparece no cenário real (sem fundo falso) em G, R1 e no fim de V.",
+ "palavras_falas": "palavras-v3.json"
+}

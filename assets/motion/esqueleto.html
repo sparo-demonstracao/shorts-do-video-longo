@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!--
+  Ponto de partida de um motion. NÃO é um molde de estilo: só entrega o quadro 1080x1920, as gravações reais
+  tocando quadro a quadro e o começo igual ao bloco "tela" (tela em cima, ele embaixo), pra emendar sem pulo.
+  Daqui pra frente o desenho é seu. Leia references/motions.md antes de escrever.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root { --laranja: #FF6B18; --creme: #F3EDE6; --fundo: #0c0a0a; --cinza: #8d8580; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--fundo); }
+  body { font-family: 'Montserrat', 'Segoe UI', sans-serif; color: var(--creme); position: relative; }
+  /* tudo é posicionado à mão e movido por transform no script: nada de transition nem animation */
+  #palco, #tela, #cam, .camada { position: absolute; will-change: transform, opacity, filter; }
+  #palco { inset: 0; }
+  #tela, #cam { overflow: hidden; transform-origin: 0 0; }
+  #tela img, #cam img { width: 100%; height: 100%; object-fit: cover; display: block; }
+</style>
+</head>
+<body>
+  <div id="palco">
+    <!-- gravação de tela real, tocando -->
+    <div id="tela"><img data-seq="tela" alt=""></div>
+    <!-- ele, de verdade, tocando -->
+    <div id="cam"><img data-seq="cam" alt=""></div>
+    <!-- suas camadas entram aqui -->
+  </div>
+
+<script src="dados.js"></script>
+<script src="kit.js"></script>
+<script>
+  const D = window.MOTION_DADOS;          // { dur, fps, hs, quadros: {tela, cam}, tela: {w, h}, cam: {w, h} }
+  Motion.config({ dur: D.dur, fps: D.fps });
+
+  const tela = document.getElementById('tela'), cam = document.getElementById('cam');
+  // estado inicial e final = bloco "tela" da montagem: tela em cima com altura D.hs, ele ocupando o resto
+  const INI = { tela: { x: 0, y: 0, w: 1080, h: D.hs }, cam: { x: 0, y: D.hs, w: 1080, h: 1920 - D.hs } };
+  const poe = (el, r, raio = 0) => Object.assign(el.style, {
+    left: r.x + 'px', top: r.y + 'px', width: r.w + 'px', height: r.h + 'px', borderRadius: raio + 'px' });
+
+  Motion.quadro((t) => {
+    // Exemplo neutro: fica parado no estado inicial. Troque por um movimento pensado pro momento.
+    poe(tela, INI.tela); poe(cam, INI.cam);
+  });
+
+  // Motion.sfx(0.4, 'vuush');   // marque os sons nos mesmos tempos dos movimentos
+</script>
+</body>
+</html>

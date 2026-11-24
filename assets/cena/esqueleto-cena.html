@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!--
+  ESQUELETO DE CENA: o Short inteiro como uma animação só (1080x1920, 30 q/s).
+  Copie pra <short-XX>/cena/motion.html DEPOIS de rodar o preparar_cena.py (ele cria dados.js, kit.js e quadros/cam).
+
+  O que já vem pronto aqui são os AJUDANTES (mat, cartao, lente, mira, etq, fio, bola, selo, ins, ele, legenda).
+  O DESENHO é seu: as cenas de exemplo abaixo (G e C) existem só pra mostrar como os ajudantes se usam. Apague-as e
+  escreva as do vídeo, cada entrada amarrada à palavra em que ele diz a coisa. Não troque só os textos.
+
+  Regra do motor: tudo é função do tempo dentro de M.quadro(t => ...). Sem transition, animation, setTimeout ou
+  Math.random solto. Texto na tela só se for fato da fala ou da tela dele.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../comum/palco.css">
+<style>
+  #grade { inset: 0; background-image: linear-gradient(rgba(255,255,255,.055) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(255,255,255,.055) 1.5px, transparent 1.5px);
+           background-size: 90px 90px; background-position: 45px 60px; }
+  /* material real em resolução cheia: a cena move a caixa (.mat) e a câmera de dentro (.cam) */
+  .mat { position: absolute; overflow: hidden; background: #0c0a0a; will-change: transform, opacity, filter, clip-path; visibility: hidden; }
+  .mat > .cam { position: absolute; left: 0; top: 0; width: 2560px; height: 1440px; transform-origin: 0 0; will-change: transform; }
+  .mat > .cam > img { position: absolute; left: 0; top: 0; width: 2560px; height: 1440px; display: block; }
+  .mat .mira { position: absolute; border: 5px solid #FF6B18; border-radius: 10px; opacity: 0; box-sizing: border-box; }
+  .etq { position: absolute; padding: 10px 22px 9px; border-radius: 999px; background: rgba(12,10,10,.86); color: var(--creme);
+         font-weight: 800; font-size: 27px; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; visibility: hidden;
+         box-shadow: 0 0 0 1.5px rgba(255,255,255,.24) inset; will-change: transform, opacity; transform-origin: 0 50%; }
+  .etq.lar { color: #0c0a0a; background: var(--laranja); box-shadow: 0 0 28px rgba(255,107,24,.6); }
+  /* ele no cenário real: a câmera de verdade embaixo; o recorte por cima só pra janela passar atrás da cabeça */
+  #sala { inset: 0; }
+  #sala img { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; display: block; }
+  #camL, #ele { position: absolute; will-change: transform; visibility: hidden; }
+  #camL img, #ele img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+  #camL { -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 15%); mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 15%); }
+  #escuro { left: 0; top: 1150px; width: 1080px; height: 770px;
+            background: linear-gradient(180deg, rgba(12,10,10,0) 0%, rgba(12,10,10,.62) 45%, rgba(12,10,10,.9) 100%); }
+  #fios { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; pointer-events: none; }
+  #fios path { fill: none; stroke: var(--laranja); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+  #fios circle { fill: #fff; filter: drop-shadow(0 0 12px rgba(255,107,24,1)); }
+  .selo { position: absolute; width: 66px; height: 66px; border-radius: 50%; background: var(--laranja); display: flex; align-items: center; justify-content: center;
+          box-shadow: 0 0 0 5px #0c0a0a, 0 0 28px rgba(255,107,24,.65); visibility: hidden; will-change: transform, opacity; }
+  .selo svg { width: 40px; height: 40px; }
+  /* plano gerado (câmera 2, entrada no monitor...) em quadro cheio, por baixo só da legenda */
+  .ins { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; visibility: hidden; background: #000; }
+  .ins img { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; display: block; object-fit: cover; will-change: transform; }
+</style>
+</head>
+<body>
+<div id="palco">
+  <div id="brilho" class="camada"></div>
+  <div id="grade" class="camada"></div>
+  <div id="sala" class="camada"><img src="../../material/sala-fundo.jpg" alt=""></div>
+  <div id="camL"><img data-dir="quadros/cam" alt=""></div>
+
+  <!-- uma .mat por captura real usada (2560x1440). Troque tela.jpg pelas capturas do vídeo. -->
+  <div class="mat" id="mTela"><div class="cam"><img src="../../material/tela.jpg" alt=""><div class="mira" id="mira1"></div></div></div>
+
+  <svg id="fios" viewBox="0 0 1080 1920"><path id="f1" d="M540 720 L540 900"/><circle id="b1" r="11"/></svg>
+  <div id="tag1" class="etq lar">Rótulo</div>
+
+  <div id="ele"><img data-dir="quadros/rec" data-ext="webp" alt=""></div>
+  <div id="escuro" class="camada"></div>
+  <div class="selo" id="selo1"><svg viewBox="0 0 24 24"><path d="M5 12.6l4.6 4.6L19 7.4" fill="none" stroke="#0c0a0a" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <!-- <div class="ins" id="insC"><img data-dir="quadros/insC" alt=""></div> -->
+  <div id="legendas"></div>
+</div>
+
+<script src="dados.js"></script>
+<script src="kit.js"></script>
+<script src="../../comum/palco.js"></script>
+<script>
+(function () {
+  const D = window.MOTION_DADOS, M = Motion, P = Palco, E = M.ease, mix = M.mix, fx = M.faixa;
+  const $ = (id) => document.getElementById(id);
+  M.config({ dur: D.dur, fps: D.fps });
+
+  // ---------- tempos: onde cada fala entra e a palavra em que cada coisa acontece ----------
+  const F = D.falas.map((f) => (f.k0 - 1) / D.fps - 1e-6);                 // começo de cada fala, no tempo do Short
+  const norm = (x) => x.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+  /** instante em que ele diz a n-ésima `palavra` entre t0 e t1 (erro se não achar: melhor que animar na hora errada) */
+  const na = (t0, t1, palavra, n = 1) => { let c = 0; for (const w of D.palavras) if (w.i >= t0 - 0.001 && w.i < t1 - 0.001 && norm(w.p) === palavra && ++c === n) return w.i;
+    throw new Error(`não achei "${palavra}" entre ${t0} e ${t1}`); };
+  const entre = (a, b) => D.palavras.filter((w) => w.i >= a && w.i < b);
+  const qd = (k) => k / D.fps, nCam = (t) => Math.max(1, Math.floor(t * D.fps + 1e-4) + 1);
+  const TEM_REC = !!(D.quadros && D.quadros.rec);                          // existe recorte dele (quadros/rec)?
+  const T = { g: 0, c: F[1] === undefined ? D.dur : F[1], fim: D.dur };     // EXEMPLO: troque pelas cenas do seu roteiro
+
+  // ---------- ajudantes (reaproveite) ----------
+  const rampa = (t, pts) => {                                               // [[t, valor, ease?], ...]
+    if (t <= pts[0][0]) return pts[0][1];
+    for (let k = 1; k < pts.length; k++) { const [t1, q1, e] = pts[k], [t0, q0] = pts[k - 1]; if (t <= t1) return mix(q0, q1, fx(t, t0, t1, e ? E[e] : E.linear)); }
+    return pts[pts.length - 1][1];
+  };
+  const CHEIO = { x: 0, y: 0, w: 1080, h: 1920 }, JAN = { x: 40, y: 130, w: 1000, h: 562, r: 26 }, ZJ = 1000 / 2560;   // janela atrás da cabeça
+  /** material real: `box` é a caixa na tela; (sx, sy) é o ponto da captura que fica no meio da caixa; z é o zoom */
+  function mat(id, o) {
+    const el = $(id); el.style.visibility = o.on ? 'visible' : 'hidden';
+    if (!o.on) return;
+    const b = o.box || CHEIO, z = o.z, ay = o.ay === undefined ? b.h / 2 : o.ay;
+    Object.assign(el.style, { left: b.x + 'px', top: b.y + 'px', width: b.w + 'px', height: b.h + 'px', borderRadius: (b.r || 0) + 'px',
+      opacity: o.op === undefined ? 1 : o.op, transform: o.tf || '', clipPath: o.clip || '',
+      boxShadow: o.sombra || (b.r ? '0 30px 80px rgba(0,0,0,.6), 0 0 0 1.5px rgba(255,255,255,.18)' : 'none') });
+    const luz = o.luz === undefined ? 1 : o.luz, blur = o.blur || 0;
+    el.style.filter = luz < 0.999 || blur > 0.05 ? `brightness(${luz.toFixed(3)}) blur(${blur.toFixed(2)}px)` : '';
+    el.firstElementChild.style.transform = `translate(${(b.w / 2 - o.sx * z).toFixed(2)}px, ${(ay - o.sy * z).toFixed(2)}px) scale(${z.toFixed(5)})`;
+  }
+  const LENTE = '0 26px 70px rgba(0,0,0,.6), 0 0 0 4px #FF6B18, 0 0 44px rgba(255,107,24,.45)';
+  /** entrada padrão de um cartão (vem de um lado, com desfoque) e saída encolhendo: use com mat({...cartao(...), box, sx, sy, z}) */
+  const cartao = (t, t0, t1, de = 'baixo', dIn = 0.45, dOut = 0.26) => {
+    const e = fx(t, t0, t0 + dIn, E.fora5), s = t1 === undefined ? 0 : fx(t, t1 - dOut, t1, E.dentro);
+    const dx = de === 'esq' ? -1 : de === 'dir' ? 1 : 0, dy = de === 'baixo' ? 1 : de === 'cima' ? -1 : 0;
+    return { on: t >= t0 && (t1 === undefined || t < t1), op: Math.min(fx(t, t0, t0 + dIn * 0.4), 1 - s), blur: (1 - e) * 12 + s * 8,
+      tf: `perspective(1900px) translate3d(${((1 - e) * dx * 230).toFixed(2)}px, ${((1 - e) * dy * 170 + M.onda(t, 5.3, t0) * 3).toFixed(2)}px, 0) rotateY(${((1 - e) * dx * -24).toFixed(2)}deg) rotateX(${((1 - e) * dy * 14).toFixed(2)}deg) scale(${(mix(0.88, 1, e) * mix(1, 0.9, s)).toFixed(4)})` };
+  };
+  /** lente: um detalhe da própria tela ampliado, com borda laranja */
+  const lente = (t, t0, t1) => { const e = fx(t, t0, t0 + 0.42, E.volta), s = fx(t, t1 - 0.22, t1, E.dentro);
+    return { on: t >= t0 && t < t1, op: Math.min(fx(t, t0, t0 + 0.12), 1 - s), tf: `translateY(${((1 - e) * 60 + M.onda(t, 4.7, t0) * 3).toFixed(2)}px) scale(${(mix(0.72, 1, e) * mix(1, 0.9, s)).toFixed(4)})`, sombra: LENTE }; };
+  /** mira: retângulo laranja em cima de um pedaço da captura (r = [x, y, largura, altura] em pixels da captura) */
+  const mira = (id, t, t0, t1, r, z) => {
+    const el = $(id), a = M.janela(t, t0, t1, 0.3, 0.25);
+    Object.assign(el.style, { left: r[0] + 'px', top: r[1] + 'px', width: r[2] + 'px', height: r[3] + 'px', opacity: a,
+      borderWidth: (5 / z).toFixed(2) + 'px', borderRadius: (12 / z).toFixed(1) + 'px', boxShadow: `0 0 ${(34 / z).toFixed(1)}px rgba(255,107,24,.6)`,
+      transform: `scale(${mix(1.3, 1, fx(t, t0, t0 + 0.36, E.volta)).toFixed(4)})` });
+  };
+  const etq = (id, t, t0, t1, x, y, esc = 1) => { const el = $(id), on = t >= t0 && t < t1; el.style.visibility = on ? 'visible' : 'hidden'; if (!on) return;
+    const e = fx(t, t0, t0 + 0.34, E.volta); el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.opacity = Math.min(fx(t, t0, t0 + 0.12), 1 - fx(t, t1 - 0.2, t1));
+    el.style.transform = `translateY(${((1 - e) * 18).toFixed(2)}px) scale(${(esc * mix(0.8, 1, e)).toFixed(4)})`; };
+  const fio = (id, t, t0, dur, t1) => { const el = $(id); M.traca(el, t, t0, dur); el.style.opacity = t >= t0 && t < t1 ? 1 - fx(t, t1 - 0.2, t1) : 0; };
+  const bola = (id, fioId, t, t0, dur, vezes = 1, intervalo = 0.5, ate = 1e9) => { const el = $(id); let on = false;
+    for (let k = 0; k < vezes; k++) { const a = t0 + k * intervalo; if (t >= a && t < a + dur && t < ate) { const pt = M.noCaminho($(fioId), fx(t, a, a + dur, E.dentroFora)); el.setAttribute('cx', pt.x); el.setAttribute('cy', pt.y); on = true; } }
+    el.style.opacity = on ? 1 : 0; };
+  const selo = (id, t, t0, t1, x, y) => { const el = $(id), on = t >= t0 && t < t1; el.style.visibility = on ? 'visible' : 'hidden'; if (!on) return;
+    const e = fx(t, t0, t0 + 0.32, E.volta); el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.opacity = fx(t, t0, t0 + 0.06);
+    el.style.transform = `scale(${mix(0.2, 1, e).toFixed(4)}) rotate(${((1 - e) * -40).toFixed(2)}deg)`; };
+  /** plano gerado em quadro cheio: [início, fim, n de quadros na pasta], na grade de quadros (use qd(k)) */
+  function ins(id, t, [t0, t1, n], o = {}) {
+    const el = $(id), img = el.firstElementChild, on = t >= t0 - 1e-6 && t < t1 - 1e-6;
+    el.style.visibility = on ? 'visible' : 'hidden'; img.dataset.dormindo = on ? '0' : '1';
+    if (!on) return;
+    img.dataset.quadro = Math.min(n, Math.floor((t - t0) * D.fps + 1e-4) + 1);
+    img.style.transform = o.zoom || o.base ? `scale(${((o.base || 1) * (1 + (o.zoom || 0) * (t - t0) / (t1 - t0))).toFixed(5)})` : '';
+    img.style.transformOrigin = o.origem || '50% 50%';
+  }
+  /** ele no cenário real. `em` = lista de trechos [t0, t1, {cx, s0, s1}] em que ele aparece (SÓ onde olha pra câmera).
+   *  cx = onde está o rosto na largura da câmera (px, de 1920); s = escala (1,25 mostra do peito pra cima). Devolve a presença. */
+  function ele(t, em) {
+    let on = false, s = 1.25, ty = 0, cx = 960;
+    for (const [t0, t1, o] of em) if (t >= t0 - 0.14 && t < t1 + 0.28) {
+      on = true; cx = o.cx || 960; s = mix(o.s0 || 1.25, o.s1 || 1.28, fx(t, t0, t1));
+      ty = (t0 > 0.2 ? (1 - fx(t, t0 - 0.14, t0 + 0.3, E.fora5)) * 1500 : 0) + (t1 < D.dur - 0.1 ? fx(t, t1, t1 + 0.28, E.dentro) * 1500 : 0);   // sobe ao entrar, desce ao sair
+    }
+    $('sala').style.opacity = on ? Math.max(0, Math.min(1, 1 - ty / 900)) : 0;
+    for (const id of ['camL', 'ele']) {
+      const el = $(id), img = el.firstElementChild, vis = on && (id === 'camL' || TEM_REC);
+      el.style.visibility = vis ? 'visible' : 'hidden'; img.dataset.dormindo = vis ? '0' : '1';
+      if (!vis) continue;
+      el.style.left = (540 - cx * s).toFixed(2) + 'px'; el.style.top = (1920 - 1080 * s + ty).toFixed(2) + 'px';
+      el.style.width = (1920 * s).toFixed(2) + 'px'; el.style.height = (1080 * s).toFixed(2) + 'px'; img.dataset.quadro = Math.min(nCam(t), D.quadros.cam);
+    }
+    return on ? Math.max(0, 1 - ty / 600) : 0;
+  }
+
+  // ---------- legenda: some onde um texto da cena já diz a fala (mudos) e não atravessa troca de cena (quebras) ----------
+  const legenda = P.legendas(D.palavras, { destaques: [/* nomes de ferramenta e números da fala */], mudos: [], quebras: [...F], max: 3, chars: 17 });
+
+  // ---------- a cena (EXEMPLO: apague e escreva a do vídeo) ----------
+  M.quadro((t) => {
+    // G: ele no cenário real, com a janela do material atrás da cabeça
+    const presenca = ele(t, [[T.g, T.c, { cx: 960 }]]);
+    $('escuro').style.opacity = presenca;
+    const flut = `translateY(${(M.onda(t, 5.2, 1) * 5).toFixed(2)}px)`, emG = t < T.c + 0.02;
+    // C: o material em tela cheia, com a câmera andando e uma mira num detalhe
+    if (emG) mat('mTela', { on: true, box: JAN, sx: 1280, sy: 720, z: ZJ * (1 + 0.035 * fx(t, 0, T.c)), tf: flut });
+    else { const z = rampa(t, [[T.c, 1.36], [T.fim, 1.5, 'dentroFora']]);            // tela cheia: zoom de 1,34 pra cima (1920/1440) pra não sobrar faixa
+      mat('mTela', { ...cartao(t, T.c, undefined, 'baixo'), sx: rampa(t, [[T.c, 1280], [T.fim, 1100, 'dentroFora']]), sy: 720, z, ay: 760 });
+      mira('mira1', t, T.c + 0.6, T.fim, [900, 600, 520, 160], z); }
+    etq('tag1', t, 0.3, T.c - 0.1, 70, 104);
+    selo('selo1', t, T.c + 1.0, T.fim, 960, 300);
+    fio('f1', t, T.c + 1.2, 0.3, T.fim); bola('b1', 'f1', t, T.c + 1.5, 0.4, 4, 0.6);
+    // ins('insC', t, [qd(74), qd(109), 35]);
+    legenda(t, presenca > 0.5 ? 1480 : 1330);
+  });
+
+  // ---------- som: efeitos gravados (material/audio), cada um no instante do movimento que acompanha ----------
+  const A = '../../material/audio/';
+  const vu = (t, v = 1) => M.sfx(t, A + 'vuush.mp3', 2.0 * v, { dur: 0.55, entra: 0.14, sai: 0.38 });
+  const pop = (t, v = 1) => M.sfx(Math.max(0, t - 0.02), A + 'pop.mp3', 0.55 * v, { corte: 0.74, dur: 0.14 });
+  vu(Math.max(0, T.c - 0.02), 0.9); pop(T.c + 0.6);
+})();
+</script>
+</body>
+</html>

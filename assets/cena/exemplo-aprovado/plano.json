@@ -1,0 +1,251 @@
+{
+ "saida": "saida/short-01-v8.mp4",
+ "fontes": {
+  "audio": {
+   "arquivo": "C:/Users/voce/Documentos/Adobe/Audition/[REA] VO_01.wav"
+  },
+  "cam": {
+   "arquivo": "C:/Users/voce/Downloads/20261015_124742.mp4",
+   "atraso": [
+    [
+     715,
+     -3.181
+    ],
+    [
+     1010,
+     -3.201
+    ],
+    [
+     1400,
+     -3.225
+    ],
+    [
+     1955,
+     -3.261
+    ],
+    [
+     2262,
+     -3.281
+    ],
+    [
+     2290,
+     -3.282
+    ],
+    [
+     5685,
+     -3.061
+    ]
+   ],
+   "nota_fim": "no fim da gravação (1h35) a imagem do celular chega ~0,16 s depois do próprio som (medido nos lábios no \"p\" de \"aplicativo\"; o boca_cv.py deu 4 quadros): o ponto de 5685 já inclui esse atraso (-3,221 do som + 0,16)."
+  },
+  "tela": {
+   "arquivo": "C:/Users/voce/Videos/2026-10-15 12-46-23.mkv",
+   "atraso": [
+    [
+     715,
+     2.159
+    ],
+    [
+     1010,
+     2.089
+    ],
+    [
+     1400,
+     2.089
+    ],
+    [
+     1740,
+     2.089
+    ],
+    [
+     1880,
+     2.019
+    ],
+    [
+     1955,
+     2.019
+    ],
+    [
+     2262,
+     2.019
+    ],
+    [
+     2300,
+     2.019
+    ],
+    [
+     5685,
+     2.016
+    ]
+   ]
+  }
+ },
+ "legendas": {
+  "ligado": false
+ },
+ "fade_fala": 0.012,
+ "trilha": {
+  "arquivo": "../material/audio/trilha-ia.mp3",
+  "volume": 0.1
+ },
+ "nota": "v8 (13/11/2026), versão escolhida: abertura em motion próprio (variante c), câmera 2 antiga (insCb), fim cortado 0,12 s depois da última palavra. A v9 (câmera 2 de ângulo alto, window.CAM2 = insCe) foi preterida.",
+ "blocos": [
+  {
+   "id": "g1",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 1028.2233,
+    "out": 1031.8566
+   },
+   "legenda": false,
+   "som": "cena/cena-sfx.wav",
+   "som_volume": 1.0
+  },
+  {
+   "id": "g2",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 1032.0567,
+    "out": 1032.99
+   },
+   "legenda": false,
+   "in": 3.6213
+  },
+  {
+   "id": "c11",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 732.2833,
+    "out": 733.7833
+   },
+   "legenda": false,
+   "in": 4.5547
+  },
+  {
+   "id": "c12",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 734.05,
+    "out": 734.65
+   },
+   "legenda": false,
+   "in": 6.0547
+  },
+  {
+   "id": "c13",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 734.7833,
+    "out": 736.9833
+   },
+   "legenda": false,
+   "in": 6.6547
+  },
+  {
+   "id": "c14",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 737.8167,
+    "out": 738.7833
+   },
+   "legenda": false,
+   "in": 8.8547
+  },
+  {
+   "id": "c15",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 738.9167,
+    "out": 741.0167
+   },
+   "legenda": false,
+   "in": 9.8213
+  },
+  {
+   "id": "c21",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 746.5134,
+    "out": 749.78
+   },
+   "legenda": false,
+   "in": 11.9213
+  },
+  {
+   "id": "r11",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 1416.9833,
+    "out": 1421.3167
+   },
+   "legenda": false,
+   "in": 15.188
+  },
+  {
+   "id": "r21",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 1844.3233,
+    "out": 1851.79
+   },
+   "legenda": false,
+   "in": 19.5213
+  },
+  {
+   "id": "w1",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 1968.9233,
+    "out": 1972.49
+   },
+   "legenda": false,
+   "in": 26.988
+  },
+  {
+   "id": "w2",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 1973.6233,
+    "out": 1976.9567
+   },
+   "legenda": false,
+   "in": 30.5547,
+   "fade_out": 0.03
+  },
+  {
+   "id": "v1",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 5701.4067,
+    "out": 5702.44
+   },
+   "legenda": false,
+   "in": 33.888
+  },
+  {
+   "id": "v2",
+   "tipo": "motion",
+   "arquivo": "cena/cena.mp4",
+   "audio": {
+    "in": 5702.6733,
+    "out": 5705.9067
+   },
+   "legenda": false,
+   "in": 34.9213,
+   "fade_out": 0.06
+  }
+ ]
+}

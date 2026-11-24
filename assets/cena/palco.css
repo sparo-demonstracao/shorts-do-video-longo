@@ -1,0 +1,51 @@
+/* Base visual das cenas (vertical 1080x1920): palco quase preto com brilho laranja embaixo, cartões escuros com
+   profundidade, Montserrat. É a família dos motions que o criador aprovou. Nada aqui se move sozinho: quem move é o script. */
+:root { --laranja: #FF6B18; --creme: #F3EDE6; --fundo: #0c0a0a; --cinza: #8d8580; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--fundo); }
+body { font-family: 'Montserrat', 'Segoe UI', sans-serif; color: var(--creme); position: relative; }
+#palco { position: absolute; inset: 0; overflow: hidden; }
+.camada { position: absolute; will-change: transform, opacity, filter; }
+#brilho { inset: 0; background:
+    radial-gradient(940px 660px at 50% 107%, rgba(255,107,24,.40), rgba(255,107,24,0) 70%),
+    radial-gradient(760px 540px at 4% 24%, rgba(255,107,24,.11), rgba(255,107,24,0) 70%); }
+
+/* cartão: gravação real (ou recorte real) flutuando no palco */
+.cartao { position: absolute; overflow: hidden; background: #121010; border-radius: 26px; visibility: hidden;
+          box-shadow: 0 36px 90px rgba(0,0,0,.62); will-change: transform, opacity, filter; transform-origin: 50% 50%; }
+.cartao > img.cheio, .cartao > canvas.cheio { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover;
+          object-position: 50% 0%; display: block; }
+.cartao::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+          box-shadow: 0 0 0 1.5px rgba(255,255,255,.15) inset; }
+
+/* ele */
+#cam { position: absolute; overflow: hidden; background: #000; box-shadow: 0 30px 90px rgba(0,0,0,.6); will-change: transform; }
+#cam img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: 56% 50%; display: block; }
+#cam::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+          box-shadow: 0 0 0 2px rgba(255,255,255,.16) inset; }
+
+/* legenda: 2 a 3 palavras por vez, cada uma entra na hora em que é dita */
+#legendas { position: absolute; left: 0; top: 0; width: 1080px; height: 0; }
+.leg { position: absolute; left: 0; width: 1080px; text-align: center; font-weight: 800; font-size: 74px; line-height: 1;
+       letter-spacing: -1.5px; text-transform: uppercase; white-space: nowrap; color: var(--creme); display: none;
+       text-shadow: 0 5px 0 rgba(0,0,0,.34), 0 12px 34px rgba(0,0,0,.8), 0 0 26px rgba(0,0,0,.7), 0 0 70px rgba(0,0,0,.6); transform-origin: 50% 50%; }
+.leg i { display: inline-block; font-style: normal; }
+.leg span { display: inline-block; margin: 0 10px; will-change: transform, opacity, filter; }
+.leg span.d { color: var(--laranja); }
+
+/* número grande com rótulo, na faixa entre a tela e ele */
+.fato { position: absolute; left: 60px; display: flex; align-items: center; gap: 30px; white-space: nowrap; will-change: transform, opacity, filter; }
+.num { font-weight: 800; font-size: 128px; line-height: 1; letter-spacing: -5px; color: var(--creme); }
+.num b { color: var(--laranja); font-weight: 800; }
+.rot { font-weight: 700; font-size: 37px; line-height: 1.12; color: var(--creme); letter-spacing: -.3px; }
+.rot small { display: block; font-weight: 600; font-size: 28px; color: var(--cinza); letter-spacing: 0; margin-top: 4px; }
+.chamada { font-weight: 700; font-size: 25px; letter-spacing: .28em; text-transform: uppercase; color: var(--laranja); white-space: nowrap; }
+
+/* mira: destaque num ponto da gravação real */
+.mira { position: absolute; border: 4px solid var(--laranja); border-radius: 14px; box-shadow: 0 0 30px rgba(255,107,24,.55);
+        will-change: transform, opacity; }
+
+/* barra de rolagem desenhada */
+.trilho { position: absolute; width: 12px; border-radius: 999px; background: rgba(255,255,255,.16); }
+.polegar { position: absolute; width: 12px; border-radius: 999px; background: linear-gradient(180deg, #ffa260, #ff5400);
+           box-shadow: 0 0 24px rgba(255,107,24,.8); }

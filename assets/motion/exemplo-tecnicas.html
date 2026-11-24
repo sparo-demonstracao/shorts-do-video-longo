@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!--
+  DEMONSTRAÇÃO DE TÉCNICAS do kit (recuo da gravação, destaque, traço que se desenha, pontos com rótulo
+  digitado, contador, texto palavra por palavra, mola, retorno). Serve pra consultar COMO se escreve cada
+  coisa em função do tempo. Não copie o visual: cada motion é desenhado pro momento do vídeo.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root { --laranja: #FF6B18; --creme: #F3EDE6; --fundo: #0c0a0a; --cinza: #8d8580; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--fundo); }
+  body { font-family: 'Montserrat', 'Segoe UI', sans-serif; color: var(--creme); position: relative; }
+  #palco, #tela, #cam, .camada { position: absolute; will-change: transform, opacity, filter; }
+  #palco { inset: 0; }
+  #brilho { inset: 0; background: radial-gradient(900px 620px at 50% 104%, rgba(255,107,24,.34), rgba(255,107,24,0) 70%),
+            radial-gradient(700px 500px at 12% 46%, rgba(255,107,24,.10), rgba(255,107,24,0) 70%); }
+  #tela, #cam { overflow: hidden; }
+  #tela img, #cam img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #tela { box-shadow: 0 40px 90px rgba(0,0,0,.6); }
+  #mira { border: 4px solid var(--laranja); border-radius: 14px; box-shadow: 0 0 34px rgba(255,107,24,.55); }
+  #fio { left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+  #perfil { left: 70px; top: 850px; width: 420px; height: 360px; overflow: visible; }
+  .pt { font: 500 21px 'JetBrains Mono', monospace; fill: var(--cinza); }
+  #num { left: 520px; top: 838px; font-weight: 800; font-size: 190px; line-height: 1; letter-spacing: -6px; color: var(--creme); }
+  #rot { left: 528px; top: 1022px; width: 500px; font-weight: 700; font-size: 40px; line-height: 1.16; color: var(--creme); }
+  #zero { left: 528px; top: 1128px; display: flex; align-items: baseline; gap: 16px; transform-origin: 0 100%; }
+  #zero b { font-weight: 800; font-size: 86px; color: var(--laranja); line-height: 1; }
+  #zero span { font-weight: 700; font-size: 32px; color: var(--cinza); }
+</style>
+</head>
+<body>
+  <div id="palco">
+    <div id="brilho" class="camada"></div>
+    <div id="tela"><img data-seq="tela" alt=""></div>
+    <div id="mira" class="camada"></div>
+    <svg id="fio" class="camada"><path id="fio-p" fill="none" stroke="#FF6B18" stroke-width="3" stroke-linecap="round"/></svg>
+    <svg id="perfil" class="camada" viewBox="0 0 420 360">
+      <line x1="210" y1="6" x2="210" y2="354" stroke="#3a3432" stroke-width="2" stroke-dasharray="5 7"/>
+      <path id="curva" fill="none" stroke="#FF6B18" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="espelho" fill="none" stroke="#F3EDE6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <g id="pontos"></g>
+    </svg>
+    <div id="num" class="camada">0</div>
+    <div id="rot" class="camada">pontos girados em torno de um eixo</div>
+    <div id="zero" class="camada"><b>0</b><span>modelos baixados</span></div>
+    <div id="cam"><img data-seq="cam" alt=""></div>
+  </div>
+
+<script src="dados.js"></script>
+<script src="kit.js"></script>
+<script>
+  const D = window.MOTION_DADOS, M = Motion, E = M.ease;
+  M.config({ dur: D.dur, fps: D.fps });
+  const $ = (id) => document.getElementById(id);
+  const tela = $('tela'), cam = $('cam');
+
+  // dois estados de cada gravação: o do bloco "tela" (começo e fim) e o do motion (meio)
+  const A = { tela: { x: 0, y: 0, w: 1080, h: D.hs, r: 0 }, cam: { x: 0, y: D.hs, w: 1080, h: 1920 - D.hs, r: 0 } };
+  const cw = 900, ch = Math.round(cw * D.hs / 1080);
+  const B = { tela: { x: 90, y: 110, w: cw, h: ch, r: 34 }, cam: { x: 250, y: 1296, w: 580, h: 560, r: 48 } };
+  const entre = (a, b, p) => ({ x: M.mix(a.x, b.x, p), y: M.mix(a.y, b.y, p), w: M.mix(a.w, b.w, p), h: M.mix(a.h, b.h, p), r: M.mix(a.r, b.r, p) });
+  const poe = (el, q) => Object.assign(el.style, { left: q.x + 'px', top: q.y + 'px', width: q.w + 'px', height: q.h + 'px', borderRadius: q.r + 'px' });
+
+  // perfil da peça: [raio, altura] -> pontos no SVG (eixo em x=210)
+  const perfil = [[.34,0],[.34,.07],[.19,.13],[.13,.3],[.105,.5],[.13,.62],[.22,.69],[.105,.74],[.175,.86],[.12,.95],[0,1]];
+  const px = (r) => 210 + r * 460, py = (h) => 348 - h * 336;
+  const d = (lado) => perfil.map(([r, h], i) => `${i ? 'L' : 'M'}${(lado > 0 ? px(r) : 210 - r * 460).toFixed(1)} ${py(h).toFixed(1)}`).join(' ');
+  $('curva').setAttribute('d', d(1)); $('espelho').setAttribute('d', d(-1));
+  const gp = $('pontos');
+  const marcas = perfil.slice(0, -1).filter((_, i) => i % 2 === 0).map(([r, h]) => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.innerHTML = `<circle cx="${px(r)}" cy="${py(h)}" r="7" fill="#FF6B18"/><text class="pt" x="${px(r) + 18}" y="${py(h) + 7}">[${r}, ${h}]</text>`;
+    gp.appendChild(g); return { g, txt: g.querySelector('text') };
+  });
+  const palavras = M.parte($('rot'), 'palavra');
+
+  // tempos (segundos dentro do motion), escolhidos pela fala
+  const T = { recua: 0.0, mira: 0.75, fio: 1.0, curva: 1.3, num: 2.5, espelho: 3.1, zero: 4.3, volta: 5.7 };
+
+  M.quadro((t) => {
+    // 1. as gravações recuam pro palco e voltam no fim (mesma curva, espelhada)
+    const p = Math.min(M.faixa(t, T.recua, T.recua + 0.75, E.fora5), 1 - M.faixa(t, T.volta, D.dur - 0.02, E.dentroFora));
+    const qt = entre(A.tela, B.tela, p), qc = entre(A.cam, B.cam, p);
+    poe(tela, qt); poe(cam, qc);
+    tela.style.transform = `perspective(1600px) rotateX(${5 * p}deg) translateY(${M.onda(t, 5) * 4 * p}px)`;
+    cam.style.boxShadow = `0 0 0 ${3 * p}px rgba(255,107,24,${0.55 * p}), 0 30px 70px rgba(0,0,0,${0.55 * p})`;
+    $('brilho').style.opacity = p;
+
+    // 2. mira num ponto da gravação real (posição em fração do cartão, então acompanha o recuo)
+    const m = M.janela(t, T.mira, T.volta - 0.1, 0.35, 0.25);
+    const mx = qt.x + qt.w * 0.655, my = qt.y + qt.h * 0.36, mw = qt.w * 0.085, mh = qt.h * 0.30;
+    Object.assign($('mira').style, { left: mx + 'px', top: my + 'px', width: mw + 'px', height: mh + 'px', opacity: m,
+      transform: `scale(${M.mix(1.6, 1, M.faixa(t, T.mira, T.mira + 0.4, E.volta))})` });
+
+    // 3. fio que sai da mira e desce até o desenho
+    const fp = $('fio-p'); const x0 = mx + mw / 2, y0 = my + mh, x1 = 280, y1 = 850;
+    fp.setAttribute('d', `M${x0} ${y0} C ${x0} ${y0 + 150}, ${x1} ${y1 - 170}, ${x1} ${y1}`); fp.__L = null;
+    M.traca(fp, t, T.fio, 0.5); $('fio').style.opacity = m;
+
+    // 4. a curva se desenha, os pontos pingam um a um e o rótulo de cada um se digita
+    $('perfil').style.opacity = M.janela(t, T.curva - 0.1, T.volta, 0.3, 0.3);
+    M.traca($('curva'), t, T.curva, 1.3, E.dentroFora);
+    marcas.forEach((mk, i) => {
+      const ti = T.curva + 0.12 + i * 0.2;
+      mk.g.style.opacity = M.faixa(t, ti, ti + 0.12);
+      mk.g.querySelector('circle').setAttribute('r', 7 * M.faixa(t, ti, ti + 0.35, E.volta));
+      M.digita(mk.txt, t, ti + 0.05, 34);
+      mk.txt.style.opacity = 1 - M.faixa(t, T.espelho, T.espelho + 0.4);          // rótulos saem quando a peça fecha
+    });
+    // 5. o outro lado aparece: a curva "gira" e fecha a silhueta
+    M.traca($('espelho'), t, T.espelho, 0.9, E.fora);
+
+    // 6. número contando + legenda palavra por palavra
+    M.entra($('num'), t, T.num, { dy: 50, blur: 18, ate: T.volta });
+    M.conta($('num'), t, T.num, 1.1, 0, 33);
+    $('rot').style.opacity = 1;
+    M.escalona(palavras, t, T.num + 0.35, 0.09, (el, tl) => M.entra(el, tl, 0, { dy: 22, blur: 10, dur: 0.4 }));
+    palavras.forEach((el) => { el.style.opacity *= 1 - M.faixa(t, T.volta - 0.3, T.volta, E.dentro); });
+
+    // 7. segundo fato entra com mola
+    const z = M.faixa(t, T.zero, T.zero + 0.8, E.mola);
+    $('zero').style.transform = `scale(${z})`;
+    $('zero').style.opacity = Math.min(M.faixa(t, T.zero, T.zero + 0.15), 1 - M.faixa(t, T.volta - 0.3, T.volta, E.dentro));
+  });
+
+  // som nos mesmos tempos do movimento
+  M.sfx(T.recua + 0.02, 'vuush', 0.8); M.sfx(T.mira + 0.1, 'pop', 0.7);
+  marcas.forEach((_, i) => M.sfx(T.curva + 0.12 + i * 0.2, 'tique', 0.6));
+  M.sfx(T.num + 1.05, 'plim', 0.6); M.sfx(T.zero + 0.05, 'baque', 0.8); M.sfx(T.volta, 'vuush', 0.7);
+</script>
+</body>
+</html>
