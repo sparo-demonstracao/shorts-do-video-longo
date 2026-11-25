@@ -120,6 +120,12 @@ que você mostra já tem trilha, efeitos, motions e acabamento.
   largura do quadro da câmera) a cada 0,3 s e veja os olhos. Onde o olhar sai da lente, mesmo por 1 s, ele sai de
   cena e entra **animação de tela cheia que continua a história** (não um cartão parado): aqui, o painel se
   construindo peça por peça até virar a tela em que a próxima frase acontece.
+- **"Tem alguns momentos em que eu não estou olhando pra câmera, acaba aparecendo que eu estou lendo o que eu estou
+  falando. Quero as animações em tela cheia nesses momentos."** (base de conhecimento, v1, 24/11/2026.) Quando ele lê
+  a fala na tela, os olhos ficam de lado com a cabeça de frente: a folha do quadro inteiro não mostra. **Antes de
+  desenhar a cena**, faça a folha dos olhos ampliados a cada 0,2 s de toda fala em que ele pode aparecer e marque os
+  intervalos exatos. O gancho costuma ser lido: aí a abertura inteira é animação em tela cheia (o material real em
+  movimento e a frase em letra gigante, palavra por palavra) e ele entra na frase seguinte.
 - **"O recorte no fundo ficou muito ruim, bem amador."** Era ele recortado sobre fundo escuro. Ele fica no cenário
   real da câmera; o recorte só serve pra janela passar atrás da cabeça.
 - **O rosto e a fala reais não passam por IA** sem ordem dele naquele vídeo.
@@ -153,6 +159,10 @@ que você mostra já tem trilha, efeitos, motions e acabamento.
   fala. Escolha trechos sem texto selecionado nem janela por cima. Depois disso as telas desenhadas são lidas como a
   versão simplificada da real. (Foi mostrado na v5; o veredito dele sobre a v5 falou da música, do painel real
   nada em separado.)
+- **"Os pontos ficam piscando... pareceu bugado, ficaria melhor se os pontos piscando tivessem outra cor e se eles
+  piscassem de forma mais constante."** (base de conhecimento, v1.) Vários elementos pequenos acendendo e apagando
+  cada um no seu tempo parecem defeito. O que precisa chamar atenção pulsa **num ritmo só, todos juntos**, numa cor
+  que só ele usa na cena; a cabeça de uma linha que se desenha não leva bolinha que some ao chegar.
 - Imagem parada com fade é "muito básico"; traço que se desenha, número que conta, texto que se digita e bolinha
   viajando na linha são os recursos que ele elogiou.
 

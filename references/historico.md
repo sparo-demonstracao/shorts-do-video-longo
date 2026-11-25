@@ -236,3 +236,30 @@ Onde isso entrou: `estilo.md` ("Roteiro e ritmo"), `tipos-de-video.md` ("Forte n
 `formato.md` (nota depois da tabela da estrutura) e o passo 4 e a PARADA 1 do `SKILL.md`. Essas duas regras tinham
 ficado guardadas só na memória de um projeto, fora da skill: quem rodava a skill em outra pasta não seguia nenhuma.
 Regra de como fazer Short mora nestes arquivos.
+
+## 24/11/2026: vídeo da base de conhecimento (explicação + tutorial, 17 min, 4 h de bruto)
+
+Primeiro Short feito de ponta a ponta depois das regras "todo Short ensina" e "ele aprova as falas antes".
+- **Brutos:** voz separada de 4h03, tela do OBS **sem som** e quatro arquivos de câmera que não cobrem a gravação
+  inteira. A tela foi alinhada pelos relógios dos arquivos (o nome do .mkv e o `creation_time` do .wav: 1 s de
+  diferença); a luz do monitor no rosto não serviu pra medir. As falas vinham de duas câmeras: juntei só os trechos
+  usados num arquivo (`material/cam-junta.mp4`, quadros contados) e pus o atraso de cada trecho na tabela `atraso`.
+- **PARADA 1:** três propostas com o texto exato (ensinar por inteiro, 80 s; levar pro vídeo, 52 s; uma ideia
+  fechada, 38 s). O criador escolheu a de ensinar por inteiro sem mexer nas falas.
+- **Versão 1** (78 s, sem crédito): gravação real do grafo em movimento na abertura, depois telas redesenhadas com
+  os textos reais das notas. Dois pedidos dele:
+  - "Tem alguns momentos em que eu não estou olhando pra câmera, acaba aparecendo que eu estou lendo o que eu estou
+    falando. Quero as animações em tela cheia nesses momentos." A folha do `rostos.py` com o quadro inteiro não
+    mostrou: só a folha dos olhos ampliados a cada 0,2 s. Era justamente o gancho (ele lê a frase de abertura na
+    tela) e o começo de duas outras entradas.
+  - "Os pontos ficam piscando. Acredito que tenha sido proposital mas pareceu bugado, ficaria melhor se os pontos
+    piscando tivessem outra cor e se eles piscassem de forma mais constante." Eram bolinhas brancas na ponta de seis
+    linhas, cada uma num tempo.
+- **Versão 2:** ele só entra onde os olhos estão na lente (a abertura ficou 3,4 s em tela cheia, com a frase em
+  letra gigante palavra por palavra); os pontos achados pulsam todos juntos, numa cor só deles (o roxo do produto).
+  Resposta dele: seguir pro acabamento.
+- **Acabamento (versão 3):** trilha nova 11,34 (veio com 73 s pra 78 pedidos: repeti 2 compassos no meio), 8 efeitos
+  gravados (0 crédito), recorte 1 crédito (3 trechos, 385 quadros). Com o recorte o enquadramento dele fechou de
+  1,25 pra 1,5, pra cabeça passar na frente da janela.
+- **Erro meu de processo:** editei a `motion.html` antes de rodar o `guardar_versao.py` da versão 1; da v1 ficaram o
+  vídeo, a `cena.mp4` e o plano, mas não a animação editável. Guardar a versão é o primeiro comando da rodada.

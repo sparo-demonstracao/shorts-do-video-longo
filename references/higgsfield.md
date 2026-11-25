@@ -73,7 +73,7 @@ sem boca nunca chegaram a um Short.
 | Segunda câmera, plano B | `generate_video`, `seedance_2_5`, `mode: "omni_reference"` | `image_references` | 28 por 4 s em 720p; 64 em 1080p |
 | Fala de ligação | `generate_audio`, `seed_audio` ou `elevenlabs_v4` | texto + voz dele | 0,46 numa frase de 9 palavras |
 | Trilha | `generate_audio`, `elevenlabs_music_v2_5`, `force_instrumental: true` | prompt + `duration` | 4,36 por 30 s; 6,5 por 45 s |
-| Efeito sonoro gravado | `search_sound_effects` + `download_sound_effect` (catálogo da Epidemic Sound) | descrição em inglês | busca livre; download gasta a cota de downloads (crédito não medido) |
+| Efeito sonoro gravado | `search_sound_effects` + `download_sound_effect` (catálogo da Epidemic Sound) | descrição em inglês | busca livre; download gasta a cota de downloads e **0 crédito** (medido em 24/11/2026: 8 downloads) |
 | Efeito sonoro gerado | `generate_audio`, `mirelo_text_to_audio` | prompt + `duration` (1 a 3 s) | cerca de 0,4 cada |
 | Rosto falando (só se ele pedir) | `generate_video`, `intone` | `character_images` + `location_image` + `audio_references` | **não medido** (o preço só sai com o áudio) |
 
@@ -184,8 +184,10 @@ usa os sons de `assets/audio/` e os sintetizados do `motion.py`, que ele chamou 
    (`preview_sound_effect`) à toa.
 4. **Baixe só os escolhidos** (`download_sound_effect`, qualidade `normal`): cada chamada gasta a cota de downloads.
    A resposta é um link que vence (~24 h): salve na hora com `curl -sSL -o` em `_sons\`, reaproveite o link se
-   precisar de novo e nunca repita a chamada no escuro depois de uma falha. **Na primeira vez, anote o `balance`
-   antes e depois e escreva aqui se o download custa crédito.**
+   precisar de novo e nunca repita a chamada no escuro depois de uma falha. Medido em 24/11/2026: 8 downloads
+   seguidos não mexeram no saldo de créditos (só na cota de downloads). A duração que a busca devolve é
+   arredondada pra baixo ("0 s" quer dizer menos de 1 s), e alguns arquivos chegam com pico acima de 0 dB ou com
+   mais de 1 s de silêncio no começo: meça antes de escolher o volume e o `corte`.
 5. **Meça e apare** (onde o som começa, pico, volume médio) e anote no `sons.json`. Na cena,
    `Motion.sfx(t, 'caminho.mp3', volume, {corte, dur, entra, sai})` usa o arquivo; `motion.py som <pasta>` refaz só
    a pista, sem renderizar a imagem de novo.
