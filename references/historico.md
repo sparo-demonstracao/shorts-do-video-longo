@@ -263,3 +263,17 @@ Primeiro Short feito de ponta a ponta depois das regras "todo Short ensina" e "e
   1,25 pra 1,5, pra cabeça passar na frente da janela.
 - **Erro meu de processo:** editei a `motion.html` antes de rodar o `guardar_versao.py` da versão 1; da v1 ficaram o
   vídeo, a `cena.mp4` e o plano, mas não a animação editável. Guardar a versão é o primeiro comando da rodada.
+
+## 25/11/2026: o Fable anima, o Opus 5.5 faz o resto
+
+Pedido do criador: a skill usa o Fable só pra criar as animações e o Opus 5.5 em todo o resto.
+- **Por que não ficou no cabeçalho da skill:** pela documentação do Claude Code, o campo `model` do SKILL.md vale só
+  no turno em que a skill é chamada com `/nome` e é ignorado quando o Claude chama a skill sozinho, que é como ela
+  costuma começar ("faz os shorts desse vídeo"). Num trabalho com três paradas, ele cobriria um turno e voltaria ao
+  modelo da conversa sem avisar. O campo também reprova no validador de skills. No lugar, a skill confere em todo
+  turno qual modelo está rodando e, se não for o Opus 5.5, pede pra trocar.
+- **As animações:** saem de um subagente (`Agent` com `model: "fable"`). Conferido nesse dia: o apelido `fable`
+  abriu o Fable 5.2. O subagente não vê a conversa, então o passo 7 traz o pedido completo que ele recebe; os
+  ajustes de animação voltam pra ele pelo `SendMessage`.
+- **A fronteira:** é do Fable o que muda o que se mexe na tela (`motion.html`, `variante.js`, encaixe de plano
+  gerado e recorte); é do Opus 5.5 o resto, incluindo trocar arquivo ou volume de um `Motion.sfx`.

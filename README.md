@@ -18,6 +18,8 @@ Pra ver como fica: [folha de quadros de um Short pronto](assets/cena/exemplo-apr
 
 - **Claude Code no Windows.** O app de computador é o caminho mais simples: a skill usa o navegador do app pra ler o
   título e os capítulos do vídeo publicado. Os programas foram feitos e testados só no Windows.
+- **Acesso ao Opus 5.5 e ao Fable no Claude Code.** Deixe a conversa no Opus 5.5: ele faz o trabalho todo e chama o
+  Fable só pra escrever as animações. Se a conversa estiver em outro modelo, a skill pede pra você trocar.
 - **Python 3.10 ou mais novo** e o **ffmpeg**.
 - **As gravações brutas do vídeo** (voz, tela e câmera, juntas ou em arquivos separados) e o link do vídeo publicado.
 - **Opcional: uma conta no Higgsfield conectada ao Claude.** Só entra no acabamento pago (trilha nova parecida com a

@@ -223,6 +223,8 @@ rodadas de foto e um rascunho, **preferiu a câmera 2 antiga**. O que ficou:
 - **Ele acompanha o Higgsfield pelo site** e às vezes vê o resultado antes de você mostrar ("ficou ruim, vi no
   Higgsfield"). Também gera coisas por conta própria lá: o saldo pode cair sem ter sido você.
 - **Ele quer saber onde está o arquivo.** Toda entrega traz o link clicável do vídeo e o caminho da pasta.
+- **"Usar o modelo Fable somente para criar animações. Fora isso, sempre o Opus 5.5."** (25/11/2026.) A conversa
+  roda no Opus 5.5 e a cena animada sai de um subagente Fable (SKILL.md, "Os modelos").
 - **"Quero que me dê sugestões de melhorias quando tudo estiver finalizado."** (24/11/2026.) A entrega final traz de 3
   a 5 ideias concretas do que ainda deixaria o Short melhor, com o trecho, o que muda na tela e o preço quando custa.
   Só ideias que melhoram o material real. Nenhuma é feita sem ele pedir.

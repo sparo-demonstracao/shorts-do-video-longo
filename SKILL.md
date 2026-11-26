@@ -8,13 +8,33 @@ description: Transforma um vídeo longo do YouTube em Shorts verticais de até 2
 O criador do canal (quem aparece no vídeo e quem te pede os Shorts; daqui em diante, "ele") te dá **o link do vídeo publicado**, **as gravações brutas** e diz quantos Shorts quer. Você entrega os
 Shorts prontos em MP4, o que gastou e o que ele precisa conferir.
 
-**Quem faz o quê.** O criador gravado é a matéria-prima: a fala e o rosto são os reais. Você é o roteirista, o editor
-e o motion designer: escolhe as frases, tira as pausas, **cria a cena animada inteira**, confere quadro a quadro e
-monta. O Higgsfield entra no fim, no acabamento: trilha nova parecida com a aprovada, um efeito sonoro gravado pra
-cada animação, o recorte e dois ou três planos curtos. Os programas em
-`scripts/` cortam, medem, fotografam e montam; eles não inventam nada sozinhos.
+**Quem faz o quê.** O criador gravado é a matéria-prima: a fala e o rosto são os reais. Você é o roteirista e o
+editor: escolhe as frases, tira as pausas, confere quadro a quadro e monta. **A cena animada inteira** é escrita por
+um subagente Fable, o motion designer (veja "Os modelos"). O Higgsfield entra no fim, no acabamento: trilha nova
+parecida com a aprovada, um efeito sonoro gravado pra cada animação, o recorte e dois ou três planos curtos. Os
+programas em `scripts/` cortam, medem, fotografam e montam; eles não inventam nada sozinhos.
 
 **Fale com ele em português simples, sem jargão de programação.** Resposta curta, o que importa primeiro.
+
+## Os modelos
+
+O criador pediu: **o Fable só pra criar as animações; todo o resto, sempre o Opus 5.5.**
+
+- **Você, o modelo principal, é o Opus 5.5.** Em todo turno desta skill, confira no seu prompt de sistema qual
+  modelo você é. Se não for o Opus 5.5, pare antes de trabalhar e peça numa linha pra ele trocar: no seletor de
+  modelo do app, ou `/model claude-opus-5-5` no terminal. Não troque o modelo da sessão por conta própria. Esta
+  regra é só do modelo principal; o subagente de animação segue o pedido que recebe.
+- **As animações são do Fable**, num subagente: ferramenta `Agent` com `model: "fable"` (o apelido; ela não aceita
+  o nome completo do modelo). É do Fable tudo o que muda o que se mexe na tela, em `cena/motion.html` e
+  `cena/variante.js`: as cenas e as passagens, uma abertura nova, as variantes do passo 10, o motion da tela do PC,
+  e o tempo e as máscaras ao pôr na cena um plano gerado (camada `.ins`) ou o recorte (`rec`).
+- **O resto é seu:** escolher os momentos, cortar e medir a fala, preparar os quadros (`preparar_cena.py`), trocar
+  o arquivo ou o volume de um `Motion.sfx`, os programas de Python (`entrada_suave`, `fundir_real`, `colar_tela`,
+  `recorte_alfa`), `plano_da_cena.py`, `compor.py`, o Higgsfield, o orçamento, a revisão e a conversa com ele.
+- Outro subagente que você abrir (ler muitos arquivos, por exemplo) vai **sem** `model`: herda o Opus 5.5 da
+  sessão.
+- Enquanto o Fable trabalha, espere o aviso dele e não mexa na `motion.html`. Se a ferramenta `Agent` não existir
+  ou recusar o `fable`, diga isso a ele e pergunte antes de escrever qualquer animação com outro modelo.
 
 ## O formato, em um minuto
 
@@ -166,15 +186,34 @@ Se ele já disse "escolhe você", siga.
 - O que ele digitou na gravação (o pedido, o comando): copie o texto exato, pra redigitar na cena.
 - Texto e número que vão aparecer: liste de onde cada um vem (fala ou tela). O que não tem origem não entra.
 
-### 7. A cena
-Copie `assets/cena/esqueleto-cena.html` pra `cena/motion.html`. Os ajudantes já vêm prontos; as cenas você escreve
-do zero, uma por parte do roteiro, cada entrada amarrada à palavra em que ele diz a coisa (`motions.md`).
-`assets/cena/exemplo-aprovado/motion.html` mostra como a versão aprovada resolveu cada parte: é pra consultar a
-técnica, não pra trocar os textos.
+### 7. A cena (quem anima é o Fable)
+A cena é escrita por um subagente Fable ("Os modelos"). Ele não vê esta conversa, então o pedido tem que bastar
+sozinho. Mande com `Agent` (`model: "fable"`, tipo `general-purpose`) um pedido com:
 
-Trabalhe em voltas curtas: escreva uma parte, `motion.py olhar cena <tempos>`, abra o `olhar.jpg`, conserte. Olhe
-sempre as passagens (ele entrando e saindo, troca de material) em 4 ou 5 instantes seguidos. Depois `render`,
-`plano_da_cena.py` e `compor.py montar`. Faça a revisão quadro a quadro de `formato.md` antes de mostrar.
+1. **Abertura:** "Você é o motion designer de um Short. Siga este pedido; o SKILL.md da skill é pro modelo
+   principal, não pra você."
+2. **Caminhos completos:** a pasta da skill (`S` = a pasta `scripts` dela) e a pasta do Short. Os programas rodam
+   da pasta do vídeo, com `PYTHONIOENCODING=utf-8`.
+3. **O que ler antes:** `references/motions.md`, `references/formato.md` (as partes do Short e a revisão quadro a
+   quadro), `references/estilo.md`, `assets/cena/exemplo-aprovado/folha-v8.jpg` e a `motion.html` de lá (pra
+   consultar a técnica, não pra copiar os textos) e as quatro folhas de `assets/motion/exemplos/`.
+4. **As entradas:** `roteiro.json`, `palavras-*.json` (o tempo de cada palavra), `cena/dados.js`, as capturas e os
+   textos exatos de `material/`, a lista do passo 6 com a origem de cada texto e número, as falas em que ele olha
+   pra lente (passo 5) e a ideia de motion de cada frase do `momentos.json`.
+5. **O trabalho:** copiar `assets/cena/esqueleto-cena.html` pra `cena/motion.html` e escrever as cenas do zero,
+   uma por parte do roteiro, cada entrada amarrada à palavra em que ele diz a coisa; voltas curtas com
+   `motion.py olhar cena <tempos>` e o `olhar.jpg`, olhando as passagens (ele entrando e saindo, troca de
+   material) em 4 ou 5 instantes seguidos; no fim, `motion.py render`.
+6. **As regras:** texto na tela só se for fato da fala ou da tela; ele só aparece onde olha pra lente; na dúvida,
+   mais limpo; nada de Higgsfield, crédito ou subagente; não mexer em `roteiro.json`, áudio, `plano.json` nem
+   `_versao-N`, e não rodar o `compor.py`.
+7. **O que devolver:** o caminho do `cena.mp4`, os `olhar.jpg` das passagens, as partes da cena com os tempos e
+   cada texto que entrou na tela com a origem dele.
+
+Quando ele terminar, confira os `olhar.jpg` e a lista de textos, rode `plano_da_cena.py` e `compor.py montar` e
+faça a revisão quadro a quadro de `formato.md` antes de mostrar. Conserto de animação volta pro mesmo subagente
+pelo `SendMessage` (carregue com `ToolSearch`, `select:SendMessage`), dizendo o trecho e o que mudar. Numa sessão
+nova, abra outro `Agent` com o pedido completo e diga o que já existe na pasta.
 
 ### 8. A versão 1 e o orçamento
 **PARADA 2.** Entregue a versão 1 (link clicável, caminho da pasta e a cópia leve pelo app) dizendo o que ela tem e
@@ -207,10 +246,16 @@ Antes de trocar qualquer coisa, `guardar_versao.py`: a versão 1 que ele viu nã
 lado a lado com a versão atual → ele decide → **preço da finalização consultado na hora** → finalização.
 Um plano que ele aprova sozinho pode ser reprovado dentro do Short; por isso a decisão é sempre no Short.
 
+Pôr o plano gerado ou o recorte dentro da cena (a camada, o tempo, a máscara) é animação: você prepara os quadros
+com os programas de Python e o Fable encaixa na `motion.html`, pelo pedido do passo 7.
+
 ### 10. Rodadas de ajuste
 Ele vai pedir mudanças, e cada rodada vira uma versão nova:
 
 - Antes de mexer: `guardar_versao.py`. O nome do arquivo sobe (`-v2`, `-v3`...). Nada que ele viu é sobrescrito.
+- Pedido que muda o que se mexe na tela (abertura nova, o motion de um trecho, duas variantes) vai pro Fable, pelo
+  pedido do passo 7, com as palavras dele e o trecho em segundos. Cortar fala, trocar trilha ou efeito e montar
+  ficam com você.
 - Duas ideias pro mesmo trecho: escreva as duas na mesma cena, escolhidas por uma linha em `cena/variante.js`
   (`window.VARIANTE = 'a'`), renderize uma depois da outra (o render sobrescreve `cena.mp4`) e entregue as duas
   mais o lado a lado só do trecho (`--de`/`--ate`).
